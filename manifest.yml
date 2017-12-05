@@ -1,5 +1,5 @@
 ---
 applications:
- - name: kariteunbrixni
-   host: kariteunbrixni
+ - name: kariteunrev
+   host: kariteunrev
    memory: 128M

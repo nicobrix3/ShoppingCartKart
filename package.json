@@ -1,0 +1,15 @@
+{
+  "name": "KarteuPrototypeBrix2",
+  "version": "0.0.2",
+  "main": "index.ejs",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "*",
+    "express": "3.2.6",
+    "mongoose": "^4.13.4"
+  }
+}

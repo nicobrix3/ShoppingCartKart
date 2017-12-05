@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  	<%include ./gen_head.ejs %>
+    <title><%= title %></title>
+  </head>
+  
+  <body>
+  	<div class="container col-md-12" style="background-color:#a3f961;">
+	    <h1 class="jumbotron"><%= title %></h1>
+		    <form class="form-horizontal col-md-offset-2" action="/api/all">
+		    	<div class="form-group">
+			    	 <label class="control-label col-md-2" for="name">Name:</label>
+			    	 <div class="col-md-5">
+	            	 	<input id="name" type="text" class="form-control" placeholder="name" value="" />
+	            	 </div>
+            	 </div>
+            	 <div class="form-group">        	 
+	            	 	<label class="control-label col-md-2" for="address">Address:</label>
+	            	 	<div class="col-md-5">
+	            	 		<input id="address" type="text" class="form-control" placeholder="address" value="" />
+	            		</div>
+            	 </div>
+            	 <div class="form-group">        	 
+	            	 	<label class="control-label col-md-2" for="school">School:</label>
+	            	 	<div class="col-md-5">
+	            	 		<input id="school" type="text" class="form-control" placeholder="school" value="" />
+	            		</div>
+            	 </div>
+            	 <div class="form-group">
+				    <div class="col-md-offset-6 col-md-3">
+				      <button type="submit" class="btn btn-default">Submit</button>
+				    </div>
+				  </div>
+		    </form>
+    </div>
+  </body>
+  
+</html>

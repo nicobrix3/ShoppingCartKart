@@ -21,7 +21,7 @@ var w_conversation = watson.conversation({
     version: 'v1',
     version_date: '2016-07-11'
 });
-var workspace = process.env.WORKSPACE_ID || 'workspaceId';
+var workspace = process.env.WORKSPACE_ID || '68452376-1b7b-4da2-84b1-35429e5bb702';
 
 app.get('/webhook/', function (req, res) {
     if (req.query['hub.verify_token'] === 'EAAceFrnaxfIBAKbNyN1wtME3Q4CEb1cnDKRnfxfIYiHpUZAALCKw4iCigwU7SD2CX0RWptfKlTbQWFO33ZCMWRjvJco5YBEq18CMZCYlV8TJ6AAjihiDkO1qUQdF2EokpWP3wKGxLuOEOujylarU3dI8S78lybhc6gSIFcfoQZDZD') {
@@ -53,7 +53,7 @@ app.post('/webhook/', function (req, res) {
 		}
 
 		var payload = {
-			workspace_id: "6f93c056-e1a9-4a36-9f53-90bdee090f45"
+			workspace_id: "68452376-1b7b-4da2-84b1-35429e5bb702"
 		};
 
 		if (params) {

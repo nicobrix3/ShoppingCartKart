@@ -1,49 +1,54 @@
-
 /**
- * Module dependencies.
+ * Copyright 2016 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , path = require('path');
+require('dotenv').load();
 
-var mongoose = require('mongoose');
-var config = require('./config');
-var app = express();
-//hehe
-var setupController = require('./controllers/setupController');
-var apiController = require('./controllers/apiController');
-
-//var port = process.env.PORT || 3000;
-
-mongoose.connect(config.getDbConnectionString(), {
-	useMongoClient:true
+var middleware = require('botkit-middleware-watson')({
+  username: process.env.CONVERSATION_USERNAME,
+  password: process.env.CONVERSATION_PASSWORD,
+  workspace_id: process.env.WORKSPACE_ID,
+  url: process.env.CONVERSATION_URL || 'https://gateway.watsonplatform.net/conversation/api',
+  version_date: '2017-05-26'
 });
-setupController(app);
-apiController(app);
-//random comment
-// all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
+module.exports = function(app) {
+  if (process.env.USE_SLACK) {
+    var Slack = require('./bot-slack');
+    Slack.controller.middleware.receive.use(middleware.receive);
+    Slack.bot.startRTM();
+    console.log('Slack bot is live');
+  }
+  if (process.env.USE_FACEBOOK) {
+    var Facebook = require('./bot-facebook');
+    Facebook.controller.middleware.receive.use(middleware.receive);
+    Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
+    console.log('Facebook bot is live');
+  }
+  if (process.env.USE_TWILIO) {
+    var Twilio = require('./bot-twilio');
+    Twilio.controller.middleware.receive.use(middleware.receive);
+    Twilio.controller.createWebhookEndpoints(app, Twilio.bot);
+    console.log('Twilio bot is live');
+  }
+  // Customize your Watson Middleware object's before and after callbacks.
+  middleware.before = function(message, conversationPayload, callback) {
+    callback(null, conversationPayload);
+  }
 
-app.get('/', routes.index);
-app.get('/users', user.list);
-//app.listen(port);
-
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
+  middleware.after = function(message, conversationResponse, callback) {
+    callback(null, conversationResponse);
+  }
+};

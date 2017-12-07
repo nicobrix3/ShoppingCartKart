@@ -1,5 +1,5 @@
 ---
 applications:
- - name: kariteunrev2
-   host: kariteunrev2
+ - name: kariteunrev3
+   host: kariteunrev3
    memory: 128M

@@ -8,8 +8,11 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
+    "botkit-middleware-watson": "^1.6.2",
     "ejs": "*",
     "express": "3.2.6",
+    "botkit": "^0.2.2",
+    "dotenv": "^2.0.0",
     "mongoose": "^4.13.4"
   }
 }

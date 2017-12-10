@@ -45,10 +45,18 @@ module.exports = function(app) {
   }
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
-    callback(null, conversationPayload);
-  }
+	  //Passing values to conversation.
+	  conversationPayload.context = USER_DETAILS;
+	  conversationPayload.context.timezone = $TIME_ZONE;
+	  callback(null, conversationPayload);
+	  }
 
   middleware.after = function(message, conversationResponse, callback) {
-    callback(null, conversationResponse);
-  }
+	    if (conversationResponse.context) {
+	      console.log("Calling external service");
+	      conversationResponse.output.text[1] += '\nCalling external service';
+	   } 
+                 // *** Call to remote service here ***
+	    callback(null, conversationResponse);
+  	  }
 };

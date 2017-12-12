@@ -46,10 +46,12 @@ module.exports = function(app) {
   middleware.before = function(message, conversationPayload, callback) {
 	  //Passing values to conversation.
 	  //console.log('Inside the before method.  messageB=' + JSON.stringify(message, 2, null));
-	  if(message.watsonData.intents[0].intent != 'goodbyes'){
+	  if(message.watsonData.intents[0].intent == 'goodbyes'){
 		  console.log('Goodbye Intent Identified');
 	  }
+	  else {
 	   callback(null, conversationPayload);
+	  	}
 	  }
 
   middleware.after = function(message, conversationResponse, callback) {

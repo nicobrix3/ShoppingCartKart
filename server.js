@@ -27,8 +27,7 @@ app.use(bodyParser.json({
 
 var port = process.env.PORT || 5000;
 app.set('port', port);
-//app.get('/', routes.index);
-//app.get('/users', user.list);
+
 require('./app')(app);
 
 // Listen on the specified port

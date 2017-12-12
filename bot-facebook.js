@@ -23,9 +23,7 @@ var controller = Botkit.facebookbot({
 
 var bot = controller.spawn();
 
-controller.changeEars(watsonMiddleware.hear);
-
-controller.hears(['goodbyes'], 'message_received', function(bot, message){
+controller.hears(['goodbyes'], ['direct_message', 'direct_mention', 'mention'], function(bot, message){
 	console.log('Goodbye Intent Identified1');
 	bot.reply(message, message.watsonData.output.text.join('\n'));
 	console.log('Goodbye Intent Identified2');

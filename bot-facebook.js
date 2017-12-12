@@ -26,8 +26,9 @@ var bot = controller.spawn();
 controller.changeEars(watsonMiddleware.hear);
 
 controller.hears(['goodbyes'], 'message_received', function(bot, message){
-	console.log('Goodbye Intent Identified');
+	console.log('Goodbye Intent Identified1');
 	bot.reply(message, message.watsonData.output.text.join('\n'));
+	console.log('Goodbye Intent Identified2');
 });
 
 controller.hears('(.*)', 'message_received', function(bot, message) {

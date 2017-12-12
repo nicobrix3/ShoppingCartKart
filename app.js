@@ -45,13 +45,15 @@ module.exports = function(app) {
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
 	  //Passing values to conversation.
-	  console.log('Inside the before method. message=' + JSON.stringify(message, 2, null));
 	  //console.log('Inside the before method.  messageB=' + JSON.stringify(message, 2, null));
-	  callback(null, conversationPayload);
+	  if(message.watsonData.intents[0].intent != 'goodbyes'){
+		  console.log('Goodbye Intent Identified');
+	  }
+	   callback(null, conversationPayload);
 	  }
 
   middleware.after = function(message, conversationResponse, callback) {
-	    console.log("Attempting to respond");
+	   //console.log("Attempting to respond");
                  // *** Call to remote service here ***
 	    callback(null, conversationResponse);
   	  }

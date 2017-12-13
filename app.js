@@ -55,7 +55,7 @@ module.exports = function(app) {
   middleware.after = function(message, conversationResponse, callback) {
 	   //console.log("Attempting to respond");
                  // *** Call to remote service here ***
-	  	console.log('Inside the after method. messageB=' + JSON.stringify(message, 2, null));
+	   //console.log('Inside the after method. messageB=' + JSON.stringify(message, 2, null));
 	    callback(null, conversationResponse);
   	  }
 };

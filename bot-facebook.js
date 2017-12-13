@@ -45,6 +45,7 @@ controller.hears('(.*)', 'message_received', function(bot, message) {
 	else {
 		console.log("Goodbye intent identified.");
 	}*/
+	console.log(message.watsonData.intent);
 	bot.reply(message, message.watsonData.output.text.join('\n'));
 });
 

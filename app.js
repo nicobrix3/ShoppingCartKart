@@ -33,7 +33,6 @@ module.exports = function(app) {
   if (process.env.USE_FACEBOOK) {
     var Facebook = require('./bot-facebook');
     Facebook.controller.middleware.receive.use(middleware.receive);
-    Facebook.controller.middleware.hear.use(middleware.hear);
     Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
     console.log('Facebook bot is live');
   }

@@ -16,12 +16,25 @@
 
 var Botkit = require('botkit');
 
+var middleware = require('botkit-middleware-watson')({
+	  username: process.env.CONVERSATION_USERNAME,
+	  password: process.env.CONVERSATION_PASSWORD,
+	  workspace_id: process.env.WORKSPACE_ID,
+	  url: process.env.CONVERSATION_URL || 'https://gateway.watsonplatform.net/conversation/api',
+	  version_date: '2017-05-26'
+	});
+
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
   verify_token: process.env.FB_VERIFY_TOKEN
 });
 
 var bot = controller.spawn();
+
+controller.hears(['goodbyes'], ['direct_message', 'direct_mention', 'mention'], middleware.hear, function(bot, message) {
+	  bot.reply(message, message.watsonData.output.text.join('\n'));
+	  console.log("Goodbye intent detected");
+	});
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
 	/*if(message.watsonData.intents[0].intent !== 'goodbyes') {

@@ -23,14 +23,15 @@ var controller = Botkit.facebookbot({
 
 var bot = controller.spawn();
 
-controller.hears(['goodbyes'], ['direct_message', 'direct_mention', 'mention'], function(bot, message){
-	console.log('Goodbye Intent Identified1');
-	bot.reply(message, message.watsonData.output.text.join('\n'));
-	console.log('Goodbye Intent Identified2');
-});
-
 controller.hears('(.*)', 'message_received', function(bot, message) {
-	bot.reply(message, message.watsonData.output.text.join('\n'));
+	if(message.watsonData.intents[0].intent !== 'goodbyes') {
+		bot.reply(message, message.watsonData.output.text.join('\n'));
+		console.log("Not a goodbye intent.");
+		return;
+	}
+	else {
+		console.log("Goodbye intent identified.");
+	}
 });
 
 module.exports.controller = controller;

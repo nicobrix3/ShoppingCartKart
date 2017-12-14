@@ -39,7 +39,7 @@ controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,m
 controller.hears('(.*)', 'message_received', function(bot, message) {
 	var shoeType = message.match[1];
 	if(shoeType === 'Nike'){
-		return bot.reply (meesage, 'Nike it is!');
+		return bot.reply (message, 'Nike it is!');
 	}
 	console.log("Controller Hears!!!");
 	bot.reply(message, message.watsonData.output.text.join('\n'));

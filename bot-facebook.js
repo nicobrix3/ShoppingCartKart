@@ -32,10 +32,9 @@ var controller = Botkit.facebookbot({
 var bot = controller.spawn();
 
 //comment sa visual studio code
-
+//return bot.startConversation(message, 'Hello there, good looking fellow.');
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
-	return bot.startConversation(message, 'Hello there, good looking fellow.');
 	console.log("Goodbye Intent Identified");
 	return bot.reply(message, "Bye! K.");
 });

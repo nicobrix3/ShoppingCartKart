@@ -33,6 +33,7 @@ var bot = controller.spawn();
 
 //comment sa visual studio code
 //return bot.startConversation(message, 'Hello there, good looking fellow.');
+bot.say('Hello Fellow!');
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	console.log("Goodbye Intent Identified");

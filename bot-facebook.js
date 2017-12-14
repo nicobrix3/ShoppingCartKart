@@ -31,6 +31,7 @@ var controller = Botkit.facebookbot({
 
 var bot = controller.spawn();
 
+//comment sa visual studio code
 bot.startConversation(message, 'Hello there, good looking fellow.');
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {

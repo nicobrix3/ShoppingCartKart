@@ -40,7 +40,7 @@ controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,m
 });
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
-	var shoeType = message.match[1];
+	var shoeType = message.match[0]; //message.match[1] to select the match
 	if(shoeType === 'Nike'){
 		return bot.reply (message, 'Nike it is!');
 	}

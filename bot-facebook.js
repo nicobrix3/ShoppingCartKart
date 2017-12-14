@@ -38,10 +38,11 @@ bot.say('Hello Fellow!');
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	/*console.log("Goodbye Intent Identified");
 	return bot.reply(message, "Bye! K.");*/ //regular response
-	return bot.reply(message,{
+	return bot.reply(message, "Bye! K. :)");
+	/*return bot.reply(message,{
 	      text: "A more complex response",
 	      icon_emoji: ":grin:"
-	    }); //slightly complex response
+	    });*/ //slightly complex response
 	/* bot.reply(message, {
 	        attachment: {
 	            'type':'template',

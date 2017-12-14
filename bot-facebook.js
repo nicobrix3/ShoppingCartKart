@@ -36,8 +36,13 @@ var bot = controller.spawn();
 bot.say('Hello Fellow!');
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
-	console.log("Goodbye Intent Identified");
-	return bot.reply(message, "Bye! K.");
+	/*console.log("Goodbye Intent Identified");
+	return bot.reply(message, "Bye! K.");*/
+	return bot.reply(message,{
+	      text: "A more complex response",
+	      username: "ReplyBot",
+	      icon_emoji: ":dash:",
+	    });
 });
 
 controller.hears('(.*)', 'message_received', function(bot, message) {

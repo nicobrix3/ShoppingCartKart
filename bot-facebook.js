@@ -33,11 +33,14 @@ var bot = controller.spawn();
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	console.log("Goodbye Intent Identified");
-	bot.reply(message, "Bye! K.");
-	return;
+	return bot.reply(message, "Bye! K.");
 });
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
+	var shoeType = message.match[1];
+	if(shoeType === 'Nike'){
+		return bot.reply (meesage, 'Nike it is!');
+	}
 	console.log("Controller Hears!!!");
 	bot.reply(message, message.watsonData.output.text.join('\n'));
 });

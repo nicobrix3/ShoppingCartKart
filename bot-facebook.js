@@ -36,9 +36,10 @@ var bot = controller.spawn();
 bot.say('Hello Fellow!');
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
+	bot.reply(message, message.watsonData.output.text.join('\n'));
 	/*console.log("Goodbye Intent Identified");
 	return bot.reply(message, "Bye! K.");*/ //regular response
-	return bot.reply(message, "Bye! K. :) <3 O:)");
+	//return bot.reply(message, "Bye! K. :) <3 O:)");
 	/*return bot.reply(message,{
 	      text: "A more complex response",
 	      icon_emoji: ":grin:"

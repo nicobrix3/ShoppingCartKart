@@ -61,6 +61,7 @@ module.exports = function(app) {
       console.log('Inside the after method. messageB=' + JSON.stringify(message, 2, null));
       //conversationPayload.context.name = $user_name;
       //conversationPayload.context.shoe = $shoe_brand;
+      //trial
       console.log(conversationPayload.context);
 	    callback(null, conversationResponse);
   	  }

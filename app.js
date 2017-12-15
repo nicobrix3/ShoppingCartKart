@@ -65,7 +65,7 @@ module.exports = function(app) {
       //trial2
       //trial3
       //trial4
-      console.log(conversationPayload.context);
+      console.log(JSON.stringify(conversationPayload));
 	    callback(null, conversationResponse);
   	  }
 };

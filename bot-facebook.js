@@ -107,6 +107,7 @@ controller.hears('(.*)', 'message_received', function(bot, message) {
 	}
 	//trial visual studio code
 	//VISUAL STUDIO CODE!!!
+	//Wow
 	console.log("Controller Hears!!!");*/
 	bot.reply(message, message.watsonData.output.text.join('\n'));
 });

@@ -101,11 +101,11 @@ controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,m
 });
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
-	var shoeType = message.match[0]; //message.match[1] to select the match
+	/*var shoeType = message.match[1]; //message.match[1] to select the match
 	if(shoeType === 'Nike'){
 		return bot.reply (message, 'Nike it is!');
 	}
-	console.log("Controller Hears!!!");
+	console.log("Controller Hears!!!");*/
 	bot.reply(message, message.watsonData.output.text.join('\n'));
 });
 

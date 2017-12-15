@@ -62,6 +62,7 @@ module.exports = function(app) {
       //conversationPayload.context.name = $user_name;
       //conversationPayload.context.shoe = $shoe_brand;
       //trial
+      //trial2
       console.log(conversationPayload.context);
 	    callback(null, conversationResponse);
   	  }

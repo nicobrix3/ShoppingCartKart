@@ -105,6 +105,7 @@ controller.hears('(.*)', 'message_received', function(bot, message) {
 	if(shoeType === 'Nike'){
 		return bot.reply (message, 'Nike it is!');
 	}
+	//trial visual studio code
 	console.log("Controller Hears!!!");*/
 	bot.reply(message, message.watsonData.output.text.join('\n'));
 });

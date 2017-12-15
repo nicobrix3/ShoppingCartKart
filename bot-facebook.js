@@ -37,6 +37,7 @@ bot.say('Hello Fellow!');
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
+	return;
 	/*console.log("Goodbye Intent Identified");
 	return bot.reply(message, "Bye! K.");*/ //regular response
 	//return bot.reply(message, "Bye! K. :) <3 O:)");

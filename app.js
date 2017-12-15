@@ -59,8 +59,8 @@ module.exports = function(app) {
 	    console.log("Attempting to respond");
                  // *** Call to remote service here ***
       console.log('Inside the after method. messageB=' + JSON.stringify(message, 2, null));
-      conversationPayload.context.name = $user_name;
-      conversationPayload.context.shoe = $shoe_brand;
+      //conversationPayload.context.name = $user_name;
+      //conversationPayload.context.shoe = $shoe_brand;
       console.log(conversationPayload.context);
 	    callback(null, conversationResponse);
   	  }

@@ -46,12 +46,6 @@ module.exports = function(app) {
   middleware.before = function(message, conversationPayload, callback) {
 	  //Passing values to conversation.
     console.log('Inside the before method.  messageB=' + JSON.stringify(message, 2, null));
-   /* conversationPayload.context.name = $user_name;
-    conversationPayload.context.shoe = $shoe_brand;
-    console.log(conversationPayload.context);*/
-	  /*if(message.watsonData.intents[0].intent == 'goodbyes'){
-		  console.log('Goodbye Intent Identified');
-	  }*/
 	    callback(null, conversationPayload);
 	  }
 
@@ -59,13 +53,6 @@ module.exports = function(app) {
 	    console.log("Attempting to respond");
                  // *** Call to remote service here ***
       console.log('Inside the after method. messageB=' + JSON.stringify(message, 2, null));
-      //conversationPayload.context.name = $user_name;
-      //conversationPayload.context.shoe = $shoe_brand;
-      //trial
-      //trial2
-      //trial3
-      //trial4
-      //console.log(JSON.stringify(conversationPayload));
 	    callback(null, conversationResponse);
   	  }
 };

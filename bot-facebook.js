@@ -16,6 +16,8 @@
 
 var Botkit = require('botkit');
 
+var	mongoStorage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
+
 var middleware = require('botkit-middleware-watson')({
 	  username: process.env.CONVERSATION_USERNAME,
 	  password: process.env.CONVERSATION_PASSWORD,
@@ -26,12 +28,12 @@ var middleware = require('botkit-middleware-watson')({
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
-  verify_token: process.env.FB_VERIFY_TOKEN
+	verify_token: process.env.FB_VERIFY_TOKEN,
+	storage: mongoStorage // added line of code for botkit-storage-mongo
 });
 
 var bot = controller.spawn();
 
-//comment sa visual studio code
 //return bot.startConversation(message, 'Hello there, good looking fellow.');
 bot.say('Hello Fellow!');
 
@@ -102,14 +104,6 @@ controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,m
 });
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
-	/*var shoeType = message.match[1]; //message.match[1] to select the match
-	if(shoeType === 'Nike'){
-		return bot.reply (message, 'Nike it is!');
-	}
-	//trial visual studio code
-	//VISUAL STUDIO CODE!!!
-	//Wow
-	console.log("Controller Hears!!!");*/
 	bot.reply(message, message.watsonData.output.text.join('\n'));
 });
 

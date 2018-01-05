@@ -42,7 +42,6 @@ module.exports = function(app) {
     Twilio.controller.createWebhookEndpoints(app, Twilio.bot);
     console.log('Twilio bot is live');
   }
-  console.log(facebook_message);
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     //Passing values to conversation. 

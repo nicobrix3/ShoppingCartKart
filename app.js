@@ -35,6 +35,7 @@ module.exports = function(app) {
     Facebook.controller.middleware.receive.use(middleware.receive);
     Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
     console.log('Facebook bot is live');
+    Facebook.bot.startConversation(message, 'Hello there, good looking fellow.');
   }
   if (process.env.USE_TWILIO) {
     var Twilio = require('./bot-twilio');
@@ -42,6 +43,7 @@ module.exports = function(app) {
     Twilio.controller.createWebhookEndpoints(app, Twilio.bot);
     console.log('Twilio bot is live');
   }
+
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
 	  //Passing values to conversation.

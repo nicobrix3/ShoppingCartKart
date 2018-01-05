@@ -15,8 +15,8 @@
  */
 
 var Botkit = require('botkit');
-
-var	mongoStorage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
+var mongoDBUri = process.env.MONGODB_URI;
+var	mongoStorage = require('botkit-storage-mongo')({mongoUri:mongoDBUri});
 
 var middleware = require('botkit-middleware-watson')({
 	  username: process.env.CONVERSATION_USERNAME,
@@ -35,7 +35,6 @@ var controller = Botkit.facebookbot({
 var bot = controller.spawn();
 
 //return bot.startConversation(message, 'Hello there, good looking fellow.');
-bot.say('Hello Fellow!');
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));

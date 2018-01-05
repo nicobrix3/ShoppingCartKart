@@ -36,7 +36,7 @@ var bot = controller.spawn();
 
 var beans = {id: 'cool', beans:['pinto', 'garbanzo']};
 controller.storage.teams.save(beans);
-controller.storage.teams.get('cool', function(error,beans)){
+controller.storage.teams.get('cool', function(error,beans){
 	console.log("GET GET GET");
 }
 //return bot.startConversation(message, 'Hello there, good looking fellow.');

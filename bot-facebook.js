@@ -33,7 +33,7 @@ var controller = Botkit.facebookbot({
 });
 
 var bot = controller.spawn();
-bot.startConversation(message, 'Hello there, good looking fellow.');
+
 //return bot.startConversation(message, 'Hello there, good looking fellow.');
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {

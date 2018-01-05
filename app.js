@@ -35,7 +35,6 @@ module.exports = function(app) {
     Facebook.controller.middleware.receive.use(middleware.receive);
     Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
     console.log('Facebook bot is live');
-    Facebook.bot.startConversation(message, 'Hello there, good looking fellow.');
   }
   if (process.env.USE_TWILIO) {
     var Twilio = require('./bot-twilio');

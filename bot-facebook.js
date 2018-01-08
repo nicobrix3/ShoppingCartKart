@@ -16,7 +16,7 @@
 
 var Botkit = require('botkit');
 var mongoDBUri = process.env.MONGODB_URI;
-var	mongoStorage = require('botkit-storage-mongo')({mongoUri:mongoDBUri});
+var	mongoStorage = require('./brix_file/botkit-storage-mongo')({mongoUri:mongoDBUri});
 
 var middleware = require('botkit-middleware-watson')({
 	  username: process.env.CONVERSATION_USERNAME,
@@ -109,7 +109,7 @@ controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,m
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
-	controller.storage.users.get('002', function(error,beans){
+	controller.storage.users.get('00001', function(error,beans){
 		console.log(beans);
 	});
 });

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 require('dotenv').load();
 
 var middleware = require('botkit-middleware-watson')({
@@ -44,21 +45,10 @@ module.exports = function(app) {
   }
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
-    //Passing values to conversation. 
-      console.log('Inside the before method.  messageB=' + JSON.stringify(message, 2, null));
-      console.log("After before method.");
-      callback(null, conversationPayload); 
+    callback(null, conversationPayload);
   }
 
-    Facebook.controller.storage.users.get('0001', function(error,beans){
-      console.log(beans);
-    });
-    
   middleware.after = function(message, conversationResponse, callback) {
-	    console.log("Attempting to respond");
-                 // *** Call to remote service here ***
-      console.log('Inside the after method. messageB=' + JSON.stringify(message, 2, null));
-      console.log("After after method.");
-      callback(null, conversationResponse);
-      }
+    callback(null, conversationResponse);
+  }
 };

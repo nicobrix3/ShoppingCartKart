@@ -37,10 +37,9 @@ var bot = controller.spawn();
 var beans = {id: 'cool', 
 						 beans:['pinto', 'garbanzo']};
 controller.storage.teams.save(beans);
-controller.storage.teams.get('cool', function(error,beans)){
+controller.storage.teams.get('cool', function(error,beans){
 	console.log("GET GET GET");
-};
-//return bot.startConversation(message, 'Hello there, good looking fellow.');
+});
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));

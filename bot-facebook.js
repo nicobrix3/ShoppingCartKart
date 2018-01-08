@@ -37,12 +37,10 @@ var bot = controller.spawn();
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
-	return;
 });
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
-	return;
 });
 
 module.exports.controller = controller;

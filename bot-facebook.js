@@ -16,16 +16,8 @@
 
 var Botkit = require('botkit');
 var mongoDBUri = process.env.MONGODB_URI;
-//var	mongoStorage = require('./brix_file/botkit-storage-mongo')({mongoUri:mongoDBUri});
-var	mongoStorage = require('botkit-storage-mongo')({mongoUri:mongoDBUri});
-
-var middleware = require('botkit-middleware-watson')({
-	  username: process.env.CONVERSATION_USERNAME,
-	  password: process.env.CONVERSATION_PASSWORD,
-	  workspace_id: process.env.WORKSPACE_ID,
-	  url: process.env.CONVERSATION_URL || 'https://gateway.watsonplatform.net/conversation/api',
-	  version_date: '2017-05-26'
-	});
+var	mongoStorage = require('./brix_file/botkit-storage-mongo')({mongoUri:mongoDBUri});
+//var	mongoStorage = require('botkit-storage-mongo')({mongoUri:mongoDBUri});
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
@@ -34,11 +26,6 @@ var controller = Botkit.facebookbot({
 });
 
 var bot = controller.spawn();
-
-controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
-	bot.reply(message, message.watsonData.output.text.join('\n'));
-});
-
 controller.hears('(.*)', 'message_received', function(bot, message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
 });

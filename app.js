@@ -53,6 +53,9 @@ module.exports = function(app) {
 	    console.log("Attempting to respond");
                  // *** Call to remote service here ***
       console.log('Inside the after method. messageB=' + JSON.stringify(message, 2, null));
-	    callback(null, conversationResponse);
-  	  }
+      callback(null, conversationResponse);
+        Facebook.controller.storage.users.get('00001', function(error,beans){
+          console.log(beans);
+        });
+      }
 };

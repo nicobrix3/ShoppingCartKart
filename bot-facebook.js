@@ -17,7 +17,6 @@
 var Botkit = require('botkit');
 var mongoDBUri = process.env.MONGODB_URI;
 var	mongoStorage = require('botkit-storage-mongo')({mongoUri:mongoDBUri});
-//var	mongoStorage = require('./brix_folder/botkit-storage-mongo')({mongoUri:mongoDBUri});
 
 var middleware = require('botkit-middleware-watson')({
 	  username: process.env.CONVERSATION_USERNAME,
@@ -35,9 +34,12 @@ var controller = Botkit.facebookbot({
 
 var bot = controller.spawn();
 
-var beans = {id: 'cool', 
-						 beans:['pinto', 'garbanzo','baltazar']};
-controller.storage.teams.save(beans);
+var beans = {
+						 id: '0001', 
+						 fname: 'Brix Nicholson',
+						 lname: 'Secretaria'
+						};
+controller.storage.users.save(beans);
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
@@ -107,7 +109,7 @@ controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,m
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
-	controller.storage.userdata.all(function(error,beans){
+	controller.storage.users.get('0001', function(error,beans){
 		console.log(beans);
 	});
 });

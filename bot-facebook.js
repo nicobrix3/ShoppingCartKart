@@ -16,7 +16,8 @@
 
 var Botkit = require('botkit');
 var mongoDBUri = process.env.MONGODB_URI;
-var	mongoStorage = require('./brix_folder/botkit-storage-mongo')({mongoUri:mongoDBUri});
+var	mongoStorage = require('botkit-storage-mongo')({mongoUri:mongoDBUri});
+//var	mongoStorage = require('./brix_folder/botkit-storage-mongo')({mongoUri:mongoDBUri});
 
 var middleware = require('botkit-middleware-watson')({
 	  username: process.env.CONVERSATION_USERNAME,

@@ -106,7 +106,7 @@ controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,m
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
-	controller.storage.teams.get('cool', function(error,beans){
+	controller.storage.userdata.get('cool', function(error,beans){
 		console.log(beans);
 	});
 });

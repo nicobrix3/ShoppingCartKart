@@ -35,11 +35,8 @@ var controller = Botkit.facebookbot({
 var bot = controller.spawn();
 
 var beans = {id: 'cool', 
-						 beans:['pinto', 'garbanzo']};
+						 beans:['pinto', 'garbanzo','baltazar']};
 controller.storage.teams.save(beans);
-controller.storage.teams.get('cool', function(error,beans){
-	console.log("GET GET GET");
-});
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
@@ -109,6 +106,9 @@ controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,m
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
+	controller.storage.teams.get('cool', function(error,beans){
+		console.log(beans);
+	});
 });
 
 module.exports.controller = controller;

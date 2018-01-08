@@ -109,7 +109,7 @@ controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,m
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
-	controller.storage.users.get('5a53330c61686e22ace8dcbc', function(error,beans){
+	controller.storage.users.get('002', function(error,beans){
 		console.log(beans);
 	});
 });

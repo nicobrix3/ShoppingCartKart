@@ -48,15 +48,16 @@ module.exports = function(app) {
       console.log('Inside the before method.  messageB=' + JSON.stringify(message, 2, null));
       console.log("After before method.");
       callback(null, conversationPayload); 
-	  }
+  }
 
+    Facebook.controller.storage.users.get('0001', function(error,beans){
+      console.log(beans);
+    });
+    
   middleware.after = function(message, conversationResponse, callback) {
 	    console.log("Attempting to respond");
                  // *** Call to remote service here ***
       console.log('Inside the after method. messageB=' + JSON.stringify(message, 2, null));
-        Facebook.controller.storage.users.get('00001', function(error,beans){
-          console.log(beans);
-        });
       console.log("After after method.");
       callback(null, conversationResponse);
       }

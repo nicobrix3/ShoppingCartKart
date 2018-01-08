@@ -16,8 +16,8 @@
 
 var Botkit = require('botkit');
 var mongoDBUri = process.env.MONGODB_URI;
-var	mongoStorage = require('./brix_file/botkit-storage-mongo')({mongoUri:mongoDBUri});
-//var	mongoStorage = require('botkit-storage-mongo')({mongoUri:mongoDBUri});
+//var	mongoStorage = require('./brix_file/botkit-storage-mongo')({mongoUri:mongoDBUri});
+var	mongoStorage = require('botkit-storage-mongo')({mongoUri:mongoDBUri});
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,

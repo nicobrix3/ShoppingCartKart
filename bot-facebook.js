@@ -106,7 +106,7 @@ controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,m
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
-	controller.storage.userdata.all('email', function(error,beans){
+	controller.storage.userdata.all(function(error,beans){
 		console.log(beans);
 	});
 });

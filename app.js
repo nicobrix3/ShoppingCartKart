@@ -45,8 +45,9 @@ module.exports = function(app) {
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     //Passing values to conversation. 
-    console.log('Inside the before method.  messageB=' + JSON.stringify(message, 2, null));
-	    callback(null, conversationPayload);
+      console.log('Inside the before method.  messageB=' + JSON.stringify(message, 2, null));
+      callback(null, conversationPayload);
+      console.log("After before method.");
 	  }
 
   middleware.after = function(message, conversationResponse, callback) {
@@ -57,5 +58,6 @@ module.exports = function(app) {
         Facebook.controller.storage.users.get('00001', function(error,beans){
           console.log(beans);
         });
+      console.log("After after method.");
       }
 };

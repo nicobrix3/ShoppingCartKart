@@ -54,12 +54,16 @@ module.exports = function(app) {
   middleware.before = function(message, conversationPayload, callback) {
     callback(null, conversationPayload);
     console.log("First Name: ");
-    console.log(beans.firstname);
+    storage.users.get('11111', function(error, beans){
+      console.log(beans.firstname);
+      });
   }
 
   middleware.after = function(message, conversationResponse, callback) {
     callback(null, conversationResponse);
     console.log("Last Name: ");
-    console.log(beans.lastname);
+    storage.users.get('11111', function(error, beans){
+      console.log(beans.lastname);
+      });
   }
 };

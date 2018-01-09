@@ -49,11 +49,21 @@ module.exports = function(app) {
 
   storage.users.get('11111', function(error, beans){
     var fname = beans.firstname;
+    console.log(fname);
   });
+
+  function checkBalance(context, callback){
+    var contextDelta = {
+      user_name: fname
+    };
+    callback(null, context);
+  }
+
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     callback(null, conversationPayload);
-    console.log("First Name: " + fname);
+    console.log("Inside Before Method. First Name: ");
+    console.log(fname);
   }
 
   middleware.after = function(message, conversationResponse, callback) {

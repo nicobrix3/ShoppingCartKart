@@ -16,7 +16,7 @@
 
 require('dotenv').load();
 
-var mongoStorage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
+var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
 //var mongoStorage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'}); 
 
 var middleware = require('botkit-middleware-watson')({
@@ -50,6 +50,10 @@ module.exports = function(app) {
   middleware.before = function(message, conversationPayload, callback) {
     callback(null, conversationPayload);
   }
+
+  storage.users.get('0001', function(error, beans){
+  console.log(beans);
+  });
 
   middleware.after = function(message, conversationResponse, callback) {
     callback(null, conversationResponse);

@@ -23,10 +23,6 @@ var controller = Botkit.facebookbot({
 
 var bot = controller.spawn();
 
-/*controller.storage.users.get('0001', function(error, beans){
-  console.log(beans);
-});*/
-
 controller.hears('(.*)', 'message_received', function(bot, message) {
   bot.reply(message, message.watsonData.output.text.join('\n'));
 });

@@ -48,22 +48,15 @@ module.exports = function(app) {
   }
 
   storage.users.get('11111', function(error, beans){
-    console.log(beans.fbid);
-    });
+    var fname = beans.firstname;
+  });
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     callback(null, conversationPayload);
-    console.log("First Name: ");
-    storage.users.get('11111', function(error, beans){
-      console.log(beans.firstname);
-      });
+    console.log("First Name: " + fname);
   }
 
   middleware.after = function(message, conversationResponse, callback) {
     callback(null, conversationResponse);
-    console.log("Last Name: ");
-    storage.users.get('11111', function(error, beans){
-      console.log(beans.lastname);
-      });
   }
 };

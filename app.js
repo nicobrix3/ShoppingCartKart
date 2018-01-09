@@ -46,14 +46,14 @@ module.exports = function(app) {
     Twilio.controller.createWebhookEndpoints(app, Twilio.bot);
     console.log('Twilio bot is live');
   }
+  
+  storage.users.get('11111', function(error, beans){
+    console.log(beans.fbid);
+    });
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     callback(null, conversationPayload);
   }
-
-  storage.users.get('11111', function(error, beans){
-  console.log(beans);
-  });
 
   middleware.after = function(message, conversationResponse, callback) {
     callback(null, conversationResponse);

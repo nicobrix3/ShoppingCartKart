@@ -51,7 +51,7 @@ module.exports = function(app) {
     callback(null, conversationPayload);
   }
 
-  storage.users.get('0001', function(error, beans){
+  storage.users.get('11111', function(error, beans){
   console.log(beans);
   });
 

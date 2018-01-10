@@ -62,7 +62,7 @@ module.exports = function(app) {
     callback(null, context);
   }
 
-  var checkBalanceAsync = Promise.promisify(checkBalance);
+  var checkBalanceAsync = Promise(checkBalance);
 
   var processWatsonResponse = function (bot, message) {
     if (message.watsonError) {

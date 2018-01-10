@@ -16,6 +16,8 @@
 
 var Botkit = require('botkit');
 var Promise = require("bluebird");
+var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
+var fname;
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
@@ -24,13 +26,16 @@ var controller = Botkit.facebookbot({
 
 var bot = controller.spawn();
 
+storage.users.get('11111', function(error, beans){
+  fname = beans.firstname;
+});
+
 function checkBalance(context, callback){
   var contextDelta = {
-    user_name: firstname
+    user_name: fname
   };
   callback(null, context);
 }
-
 var checkBalanceAsync = Promise.promisify(checkBalance);
 
 var processWatsonResponse = function (bot, message) {
@@ -54,10 +59,12 @@ var processWatsonResponse = function (bot, message) {
     }
   }
 };
-controller.on('message_received', processWatsonResponse);
+
+controller.on('greetings', 'message_received', processWatsonResponse);
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
   bot.reply(message, message.watsonData.output.text.join('\n'));
+  console.log(fname);
 });
 
 module.exports.controller = controller;

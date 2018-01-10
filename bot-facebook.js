@@ -61,7 +61,7 @@ var processWatsonResponse = function (bot, message) {
   if (typeof message.watsonData.output !== 'undefined') {
     //send "Please wait" to users
     console.log("Ari mo reply ang bot");
-    bot.reply(message, message.watsonData.output.text.join('\n'));
+    //bot.reply(message, message.watsonData.output.text.join('\n'));
     console.log("Ning reply na ang bot");
     if (message.watsonData.output.action === 'check_balance') {
       var newMessage = clone(message);
@@ -87,18 +87,11 @@ var processWatsonResponse = function (bot, message) {
 
 //controller.hears('(.*)', 'message_received', processWatsonResponse);
 
-controller.hears('greetings', 'message_received', function(bot, message) {
-  console.log("Greetings intent detected");
-  watsonMiddleware.interpret(bot, message, function() {
-      if (message.watsonError) {
-           bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
-      } else {
-        processWatsonResponse (bot, message);
-      }
-  });
-});
+controller.hears('greetings', 'message_received', processWatsonResponse);
 
-controller.on('message_received', processWatsonResponse);
+controller.hears('(.*)', 'message_received', function(bot, message) {
+  bot.reply(message, message.watsonData.output.text.join('\n'));
+});
 
 module.exports.controller = controller;
 module.exports.bot = bot;

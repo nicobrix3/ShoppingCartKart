@@ -64,6 +64,7 @@ module.exports = function(app) {
   }
 
   middleware.after = function(message, conversationResponse, callback) {
+    console.log("Inside After Method");
     console.log(JSON.stringify(conversationResponse));
     callback(null, conversationResponse);
   }

@@ -18,6 +18,7 @@ var Botkit = require('botkit');
 var clone = require('clone');
 var Promise = require('bluebird');
 var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
+
 var watsonMiddleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
   password: process.env.CONVERSATION_PASSWORD,
@@ -85,6 +86,18 @@ var processWatsonResponse = function (bot, message) {
 });*/
 
 //controller.hears('(.*)', 'message_received', processWatsonResponse);
+
+controller.hears('greetings', 'message_received', function(bot, message) {
+  console.log("Greetings intent detected");
+  watsonMiddleware.interpret(bot, message, function() {
+      if (message.watsonError) {
+           bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
+      } else {
+        processWatsonResponse (bot, message);
+      }
+  });
+});
+
 controller.on('message_received', processWatsonResponse);
 
 module.exports.controller = controller;

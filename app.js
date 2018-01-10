@@ -17,7 +17,6 @@
 require('dotenv').load();
 
 var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
-var Promise = require("bluebird");
 
 var fname;
 var firstname;
@@ -55,38 +54,6 @@ module.exports = function(app) {
     firstname = beans.firstname;
     console.log(fname);
   });
-
-  function checkBalance(context, callback){
-    var contextDelta = {
-      user_name: firstname
-    };
-    callback(null, context);
-  }
-
-  var checkBalanceAsync = Promise.promisify(checkBalance);
-
-  var processWatsonResponse = function (bot, message) {
-    if (message.watsonError) {
-      return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
-    }
-    if (typeof message.watsonData.output !== 'undefined') {
-      //send "Please wait" to users
-      bot.reply(message, message.watsonData.output.text.join('\n'));
-      if (message.watsonData.output.action === 'check_balance') {
-        var newMessage = clone(message);
-        newMessage.text = 'balance result';
-  
-        checkBalanceAsync(message.watsonData.context).then(function (contextDelta) {
-          return watsonMiddleware.sendToWatsonAsync(bot, newMessage, contextDelta);
-        }).catch(function (error) {
-          newMessage.watsonError = error;
-        }).then(function () {
-          return processWatsonResponse(bot, newMessage);
-        });
-      }
-    }
-  };
-  Facebook.controller.on('message_received', processWatsonResponse);
 
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {

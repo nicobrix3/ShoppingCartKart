@@ -72,7 +72,8 @@ var processWatsonResponse = function (bot, message) {
   bot.reply(message, message.watsonData.output.text.join('\n'));
 });*/
 
-controller.hears('(.*)', 'message_received', processWatsonResponse);
+//controller.hears('(.*)', 'message_received', processWatsonResponse);
+controller.on('message_received', processWatsonResponse);
 
 module.exports.controller = controller;
 module.exports.bot = bot;

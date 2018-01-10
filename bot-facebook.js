@@ -87,7 +87,7 @@ var processWatsonResponse = function (bot, message) {
 
 //controller.hears('(.*)', 'message_received', processWatsonResponse);
 
-controller.hears('greetings', 'message_received', processWatsonResponse);
+controller.hears('greetings', 'message_received', watsonMiddleware.hear, processWatsonResponse);
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
   bot.reply(message, message.watsonData.output.text.join('\n'));

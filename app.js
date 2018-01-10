@@ -17,7 +17,8 @@
 require('dotenv').load();
 
 var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
- 
+var Promise = require("bluebird");
+
 var fname;
 var firstname;
 
@@ -62,7 +63,7 @@ module.exports = function(app) {
     callback(null, context);
   }
 
-  var checkBalanceAsync = Promise(checkBalance);
+  var checkBalanceAsync = Promise.promisify(checkBalance);
 
   var processWatsonResponse = function (bot, message) {
     if (message.watsonError) {

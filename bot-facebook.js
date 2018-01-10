@@ -43,6 +43,8 @@ function checkBalance(context, callback){
   var contextDelta = {
     user_name: fname
   };
+  console.log('user_name:')
+  console.log(user_name);
   callback(null, context);
 }
 

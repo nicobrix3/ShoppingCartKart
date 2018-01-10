@@ -17,7 +17,7 @@
 require('dotenv').load();
 
 var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
-//var mongoStorage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'}); 
+ 
 var fname;
 
 var middleware = require('botkit-middleware-watson')({
@@ -49,7 +49,7 @@ module.exports = function(app) {
   }
 
   storage.users.get('11111', function(error, beans){
-    fname = beans.firstname;
+    fname = beans;
     console.log(fname);
   });
 

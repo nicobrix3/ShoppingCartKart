@@ -15,6 +15,7 @@
  */
 
 var Botkit = require('botkit');
+var clone = require('clone');
 var Promise = require("bluebird");
 var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
 var fname;
@@ -54,7 +55,6 @@ var processWatsonResponse = function (bot, message) {
     if (message.watsonData.output.action === 'check_balance') {
       var newMessage = clone(message);
       newMessage.text = 'balance result';
-
       checkBalanceAsync(message.watsonData.context).then(function (contextDelta) {
         return watsonMiddleware.sendToWatsonAsync(bot, newMessage, contextDelta);
       }).catch(function (error) {

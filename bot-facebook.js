@@ -31,15 +31,17 @@ storage.users.get('11111', function(error, beans){
 });
 
 function checkBalance(context, callback){
+  console.log("CHECKBALANCE!!!");
   var contextDelta = {
     user_name: fname
   };
   callback(null, context);
 }
+
 var checkBalanceAsync = Promise.promisify(checkBalance);
 
 var processWatsonResponse = function (bot, message) {
-  console.log("NING SULOD SA PROCESSWATSONRESPONSE");
+  console.log("NING SULOD SA PROCESSWATSONRESPONSE!!!");
   if (message.watsonError) {
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
@@ -65,7 +67,6 @@ controller.hears('greetings', 'message_received', processWatsonResponse);
 
 controller.hears('(.*)', 'message_received', function(bot, message) {
   bot.reply(message, message.watsonData.output.text.join('\n'));
-  console.log(fname);
 });
 
 module.exports.controller = controller;

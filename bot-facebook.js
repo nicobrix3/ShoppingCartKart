@@ -18,6 +18,13 @@ var Botkit = require('botkit');
 var clone = require('clone');
 var Promise = require('bluebird');
 var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
+var watsonMiddleware = require('botkit-middleware-watson')({
+  username: process.env.CONVERSATION_USERNAME,
+  password: process.env.CONVERSATION_PASSWORD,
+  workspace_id: process.env.WORKSPACE_ID,
+  url: process.env.CONVERSATION_URL || 'https://gateway.watsonplatform.net/conversation/api',
+  version_date: '2017-05-26'
+});
 var fname;
 
 var controller = Botkit.facebookbot({

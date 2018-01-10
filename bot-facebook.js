@@ -59,7 +59,6 @@ var processWatsonResponse = function (bot, message) {
   }
   if (typeof message.watsonData.output !== 'undefined') {
     //send "Please wait" to users
-    console.log(fname);
     console.log("Ari mo reply ang bot");
     bot.reply(message, message.watsonData.output.text.join('\n'));
     console.log("Ning reply na ang bot");
@@ -67,10 +66,12 @@ var processWatsonResponse = function (bot, message) {
       var newMessage = clone(message);
       newMessage.text = 'balance result';
       checkBalanceAsync(message.watsonData.context).then(function (contextDelta) {
+        console.log("Send to WatsonAsync");
         return watsonMiddleware.sendToWatsonAsync(bot, newMessage, contextDelta);
       }).catch(function (error) {
         newMessage.watsonError = error;
       }).then(function () {
+        console.log("returned newMessage");
         return processWatsonResponse(bot, newMessage);
       });
     }

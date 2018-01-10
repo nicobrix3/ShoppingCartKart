@@ -16,7 +16,7 @@
 
 var Botkit = require('botkit');
 var clone = require('clone');
-var Promise = require("bluebird");
+var Promise = require('bluebird');
 var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
 var fname;
 

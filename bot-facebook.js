@@ -44,6 +44,7 @@ var checkBalanceAsync = Promise.promisify(checkBalance);
 var processWatsonResponse = function (bot, message) {
   console.log("NING SULOD SA PROCESSWATSONRESPONSE!!!");
   if (message.watsonError) {
+    console.log(message.watsonError);
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
   if (typeof message.watsonData.output !== 'undefined') {

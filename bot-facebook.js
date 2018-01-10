@@ -44,6 +44,7 @@ function checkBalance(context, callback){
     user_name: fname
   };
   console.log("First Name inside checkBalance:");
+  console.log(contextDelta.user_name);
   console.log(fname);
   callback(null, context);
 }

@@ -16,10 +16,8 @@
 
 require('dotenv').load();
 
-//var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
-
+var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
 var fname;
-var firstname;
 
 var middleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
@@ -49,23 +47,19 @@ module.exports = function(app) {
     console.log('Twilio bot is live');
   }
 
-  /*storage.users.get('11111', function(error, beans){
-    fname = beans;
-    firstname = beans.firstname;
-    console.log(fname);
-  });*/
+  storage.users.get('11111', function(error, beans){
+    fname = beans.firstname;
+  });
 
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
-    console.log(JSON.stringify(conversationPayload));
+    console.log("First Name: %s" + JSON.stringify(fname));
+    console.log("Inside Before Method: %s" + JSON.stringify(conversationPayload));
     callback(null, conversationPayload);
-    console.log("Inside Before Method. First Name: ");
-    //console.log(fname);
   }
 
   middleware.after = function(message, conversationResponse, callback) {
-    console.log("Inside After Method");
-    console.log(JSON.stringify(conversationResponse));
+    console.log("Inside After Method: %s" + JSON.stringify(conversationResponse));
     callback(null, conversationResponse);
   }
 };

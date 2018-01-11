@@ -35,7 +35,8 @@ var bot = controller.spawn();
 
 function checkBalance(context, callback) {
   var contextDelta = {
-   user_name: 'Henrietta'
+   user_name: 'Henrietta',
+   fname: 'Henrietta'
   };
   callback(null, context);
 }
@@ -53,7 +54,7 @@ var processWatsonResponse = function (bot, message) {
 
     if (message.watsonData.output.action === 'check_balance') {
       var newMessage = clone(message);
-      newMessage.text = 'tell me about the company';
+      newMessage.text = 'check new name';
 
       checkBalanceAsync(message.watsonData.context).then(function (contextDelta) {
         return watsonMiddleware.sendToWatsonAsync(bot, newMessage, contextDelta);

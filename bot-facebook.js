@@ -53,7 +53,7 @@ function checkBalance(context, callback){
 var checkBalanceAsync = Promise.promisify(checkBalance);
 
 var processWatsonResponse = function (bot, message) {
-  console.log("NING SULOD SA PROCESSWATSONRESPONSE!!!");
+  console.log("GREETINGS DETECTED! NING SULOD SA PROCESSWATSONRESPONSE!!!");
   if (message.watsonError) {
     console.log(message.watsonError);
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
@@ -86,12 +86,14 @@ var processWatsonResponse = function (bot, message) {
 });*/
 
 //controller.hears('(.*)', 'message_received', processWatsonResponse);
-
-controller.hears('greetings', 'message_received', watsonMiddleware.hear, processWatsonResponse);
-
-controller.hears('(.*)', 'message_received', function(bot, message) {
-  bot.reply(message, message.watsonData.output.text.join('\n'));
-});
+if(controller.hears('greetings', 'message_received')){
+  controller.hears('greetings', 'message_received', watsonMiddleware.hear, processWatsonResponse)
+}
+else{
+  controller.hears('(.*)', 'message_received', function(bot, message) {
+    bot.reply(message, message.watsonData.output.text.join('\n'));
+  });
+}
 
 module.exports.controller = controller;
 module.exports.bot = bot;

@@ -26,10 +26,14 @@ var watsonMiddleware = require('botkit-middleware-watson')({
   version_date: '2017-05-26'
 });
 
-var controller = Botkit.facebookbot({
+var bot_options = {
+  json_file_store: __dirname + '/../.data/db/'
+};
+
+var controller = Botkit.facebookbot(bot_options, ({
   access_token: process.env.FB_ACCESS_TOKEN,
   verify_token: process.env.FB_VERIFY_TOKEN
-});
+}));
 
 var bot = controller.spawn();
 
@@ -57,6 +61,7 @@ var processWatsonResponse = function (bot, message) {
       newMessage.text = 'check new name';
 
       checkBalanceAsync(message.watsonData.context).then(function (contextDelta) {
+        console.log("contextDelta: " + JSON.stringify(contextDelta));
         return watsonMiddleware.sendToWatsonAsync(bot, newMessage, contextDelta);
       }).catch(function (error) {
         newMessage.watsonError = error;

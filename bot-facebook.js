@@ -32,6 +32,7 @@ var controller = Botkit.facebookbot({
 });
 
 var bot = controller.spawn();
+
 function checkBalance(context, callback) {
   var contextDelta = {
    user_name: "Henrietta"
@@ -51,7 +52,7 @@ var processWatsonResponse = function (bot, message) {
 
     if (message.watsonData.output.action === 'check_balance') {
       var newMessage = clone(message);
-      newMessage.text = 'hello';
+      newMessage.text = 'Changed the user_name';
 
       checkBalanceAsync(message.watsonData.context).then(function (contextDelta) {
         return watsonMiddleware.sendToWatsonAsync(bot, newMessage, contextDelta);
@@ -64,15 +65,19 @@ var processWatsonResponse = function (bot, message) {
   }
 };
 
-controller.on('message_received', processWatsonResponse);
+//controller.on('message_received', processWatsonResponse);
 
-/*controller.hears('(.*)', 'message_received', function(bot, message) { // original
-  bot.reply(message, message.watsonData.output.text.join('\n'));
-}); */
+controller.hears('(.*)', 'message_received', function(bot, message) { // original
+  if (message.watsonError) {
+    bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
+  } else {
+    processWatsonResponse(bot, message);
+  }
+});
 
-//controller.hears('(.*)', 'message_received', processWatsonResponse);
+//controller.hears('(.*)', 'message_received', processWatsonResponse); // trying out this line of code
 
-//controller.hears('greetings', 'message_received', watsonMiddleware.hear, processWatsonResponse)
+//controller.hears('greetings', 'message_received', watsonMiddleware.hear, processWatsonResponse) // intent matching
 
 module.exports.controller = controller;
 module.exports.bot = bot;

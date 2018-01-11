@@ -35,7 +35,7 @@ var bot = controller.spawn();
 
 function checkBalance(context, callback) {
   var contextDelta = {
-   user_name: Henrietta
+   user_name: 'Henrietta'
   };
   callback(null, context);
 }

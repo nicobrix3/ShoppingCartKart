@@ -67,13 +67,13 @@ var processWatsonResponse = function (bot, message) {
 
 //controller.on('message_received', processWatsonResponse);
 
-/* controller.hears('(.*)', 'message_received', function(bot, message) { // original
+controller.hears('(.*)', 'message_received', function(bot, message) { // original
   if (message.watsonError) {
     bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   } else {
     processWatsonResponse(bot, message);
   }
-}); */
+});
 
 //controller.hears('(.*)', 'message_received', processWatsonResponse); // trying out this line of code
 

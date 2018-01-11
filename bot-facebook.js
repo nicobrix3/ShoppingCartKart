@@ -44,6 +44,7 @@ var checkBalanceAsync = Promise.promisify(checkBalance);
 
 var processWatsonResponse = function (bot, message) {
   if (message.watsonError) {
+    console.log(message.watsonError);
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
   if (typeof message.watsonData.output !== 'undefined') {
@@ -69,6 +70,7 @@ var processWatsonResponse = function (bot, message) {
 
 controller.hears('(.*)', 'message_received', function(bot, message) { // original
   if (message.watsonError) {
+    console.log(message.watsonError);
     bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   } else {
     processWatsonResponse(bot, message);

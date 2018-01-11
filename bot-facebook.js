@@ -26,6 +26,7 @@ var watsonMiddleware = require('botkit-middleware-watson')({
   url: process.env.CONVERSATION_URL || 'https://gateway.watsonplatform.net/conversation/api',
   version_date: '2017-05-26'
 });
+
 var fname;
 
 var controller = Botkit.facebookbot({
@@ -81,19 +82,13 @@ var processWatsonResponse = function (bot, message) {
 
 //controller.hears('greetings', 'message_received', processWatsonResponse);
 
-/*controller.hears('(.*)', 'message_received', function(bot, message) {
+/*controller.hears('(.*)', 'message_received', function(bot, message) { // original
   bot.reply(message, message.watsonData.output.text.join('\n'));
 });*/
 
 //controller.hears('(.*)', 'message_received', processWatsonResponse);
-if(controller.hears('greetings', 'message_received')){
-  controller.hears('greetings', 'message_received', watsonMiddleware.hear, processWatsonResponse)
-}
-else{
-  controller.hears('(.*)', 'message_received', function(bot, message) {
-    bot.reply(message, message.watsonData.output.text.join('\n'));
-  });
-}
+
+controller.hears('greetings', 'message_received', watsonMiddleware.hear, processWatsonResponse)
 
 module.exports.controller = controller;
 module.exports.bot = bot;

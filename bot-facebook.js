@@ -53,7 +53,7 @@ var processWatsonResponse = function (bot, message) {
 
     if (message.watsonData.output.action === 'check_balance') {
       var newMessage = clone(message);
-      newMessage.text = 'Changed the user_name';
+      newMessage.text = 'I would like to purchase a shoe';
 
       checkBalanceAsync(message.watsonData.context).then(function (contextDelta) {
         return watsonMiddleware.sendToWatsonAsync(bot, newMessage, contextDelta);

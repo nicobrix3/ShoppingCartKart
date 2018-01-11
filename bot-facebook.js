@@ -53,7 +53,7 @@ var processWatsonResponse = function (bot, message) {
 
     if (message.watsonData.output.action === 'check_balance') {
       var newMessage = clone(message);
-      newMessage.text = 'I would like to purchase a shoe';
+      newMessage.text = 'tell me about the company';
 
       checkBalanceAsync(message.watsonData.context).then(function (contextDelta) {
         return watsonMiddleware.sendToWatsonAsync(bot, newMessage, contextDelta);
@@ -66,16 +66,16 @@ var processWatsonResponse = function (bot, message) {
   }
 };
 
-//controller.on('message_received', processWatsonResponse);
+controller.on('message_received', processWatsonResponse);
 
-controller.hears('(.*)', 'message_received', function(bot, message) { // original
+/*controller.hears('(.*)', 'message_received', function(bot, message) { // original
   if (message.watsonError) {
     console.log(message.watsonError);
     bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   } else {
     processWatsonResponse(bot, message);
   }
-});
+});*/
 
 //controller.hears('(.*)', 'message_received', processWatsonResponse); // trying out this line of code
 

@@ -81,8 +81,8 @@ module.exports = function(app) {
     }
 
     if(typeof message.watsonData.output !== 'undefined') {
-      //send "Please wait" to users
-      //bot.reply(message, message.watsonData.output.text.join('\n'));
+      //send please wait to user
+      bot.reply(message, message.watsonData.output.text.join('\n'));
       
       if(message.watsonData.output.action === 'check_balance'){
         var newMessage = clone(message);

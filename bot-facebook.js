@@ -23,9 +23,33 @@ var controller = Botkit.facebookbot({
 
 var bot = controller.spawn();
 
-controller.hears('(.*)', 'message_received', function(bot, message) {
+
+var processWatsonResponse = function(bot, message){
+  if(message.watsonError){
+    return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
+  }
+
+  if(typeof message.watsonData.output !== 'undefined') {
+    //send please wait to user
+    bot.reply(message, message.watsonData.output.text.join('\n'));
+    
+    if(message.watsonData.output.action === 'check_balance'){
+      var newMessage = clone(message);
+      newMessage.text = 'check new name';
+      //send to Watson
+      middleware.interpret(bot, newMessage, function(){
+        //send results to user
+        processWatsonResponse(bot, newMessage);
+      });
+    }
+  }
+};
+
+/*controller.hears('(.*)', 'message_received', function(bot, message) {
   bot.reply(message, message.watsonData.output.text.join('\n'));
-});
+});*/
+
+controller.on('message_received', processWatsonResponse);
 
 module.exports.controller = controller;
 module.exports.bot = bot;

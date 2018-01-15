@@ -74,27 +74,4 @@ module.exports = function(app) {
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
     callback(null, conversationResponse);
   };
-
-  var processWatsonResponse = function(bot, message){
-    if(message.watsonError){
-      return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
-    }
-
-    if(typeof message.watsonData.output !== 'undefined') {
-      //send please wait to user
-      bot.reply(message, message.watsonData.output.text.join('\n'));
-      
-      if(message.watsonData.output.action === 'check_balance'){
-        var newMessage = clone(message);
-        newMessage.text = 'check new name';
-        //send to Watson
-        middleware.interpret(bot, newMessage, function(){
-          //send results to user
-          processWatsonResponse(bot, newMessage);
-        });
-      }
-    }
-  };
-
-  Facebook.controller.on('message_received', processWatsonResponse);
 };

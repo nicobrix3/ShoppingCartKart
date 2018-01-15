@@ -21,8 +21,8 @@ var fname;
 
 function checkBalance(conversationResponse, callback) {
   //middleware.after function must pass a complete Watson respose to callback
-  conversationResponse.context.user_name = 'Henrietta';
-  conversationResponse.context.fname = 'Pewdiepie';
+  //conversationResponse.context.user_name = 'Henrietta';
+  conversationResponse.context.user_name = fname;
   callback(null, conversationResponse);
 }
 

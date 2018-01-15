@@ -96,5 +96,5 @@ module.exports = function(app) {
     }
   };
 
-  controller.on('message_received', processWatsonResponse);
+  Facebook.controller.on('message_received', processWatsonResponse);
 };

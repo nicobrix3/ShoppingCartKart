@@ -18,13 +18,13 @@ var Botkit = require('botkit');
 var clone = require('clone');
 var Promise = require('bluebird');
 
-var watsonMiddleware = require('botkit-middleware-watson')({
+/*var watsonMiddleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
   password: process.env.CONVERSATION_PASSWORD,
   workspace_id: process.env.WORKSPACE_ID,
   url: process.env.CONVERSATION_URL || 'https://gateway.watsonplatform.net/conversation/api',
   version_date: '2017-05-26'
-});
+}); */
 
 /*var bot_options = {
   json_file_store: __dirname + '/../.data/db/'
@@ -41,11 +41,11 @@ var controller = Botkit.facebookbot({
 });
 
 var bot = controller.spawn();
-
+/*
 function checkBalance(context, callback) {
   var contextDelta = {
    user_name: 'Henrietta',
-   fname: 'Henrietta'
+   fname: 'Pewdiepie'
   };
   callback(null, context);
 }
@@ -78,7 +78,7 @@ var processWatsonResponse = function (bot, message) {
 };
 
 controller.on('message_received', processWatsonResponse);
-
+*/
 /*controller.hears('(.*)', 'message_received', function(bot, message) { // original
   if (message.watsonError) {
     console.log(message.watsonError);

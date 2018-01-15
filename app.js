@@ -19,6 +19,13 @@ require('dotenv').load();
 var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
 var fname;
 
+function checkBalance(conversationResponse, callback) {
+  //middleware.after function must pass a complete Watson respose to callback
+  conversationResponse.context.user_name = 'Henrietta';
+  conversationResponse.context.fname = 'Pewdiepie';
+  callback(null, conversationResponse);
+}
+
 var middleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
   password: process.env.CONVERSATION_PASSWORD,
@@ -59,7 +66,35 @@ module.exports = function(app) {
   }
 
   middleware.after = function(message, conversationResponse, callback) {
+    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
+      if(conversationResponse.output.action === 'check_balance'){
+        return checkBalance(conversationResponse, callback);
+      }
+    }
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
     callback(null, conversationResponse);
   }
+
+  var processWatsonResponse = function(bot, message){
+    if(message.watsonError){
+      return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
+    }
+
+    if(typeof message.watsonData.output !== 'undefined') {
+      //send "Please wait" to users
+      //bot.reply(message, message.watsonData.output.text.join('\n'));
+      
+      if(message.watsonData.output.action === 'check_balance'){
+        var newMessage = clone(message);
+        newMessage.text = 'check new name';
+        //send to Watson
+        middleware.interpret(bot, newMessage, funtion(){
+          //send results to user
+          processWatsonResponse(bot, newMessage);
+        });
+      }
+    }
+  };
+
+  controller.on('message_received', processWatsonResponse);
 };

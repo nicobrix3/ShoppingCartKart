@@ -63,7 +63,7 @@ module.exports = function(app) {
     console.log("First Name: " + JSON.stringify(fname));
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
     callback(null, conversationPayload);
-  }
+  };
 
   middleware.after = function(message, conversationResponse, callback) {
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
@@ -73,7 +73,7 @@ module.exports = function(app) {
     }
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
     callback(null, conversationResponse);
-  }
+  };
 
   var processWatsonResponse = function(bot, message){
     if(message.watsonError){
@@ -88,7 +88,7 @@ module.exports = function(app) {
         var newMessage = clone(message);
         newMessage.text = 'check new name';
         //send to Watson
-        middleware.interpret(bot, newMessage, funtion(){
+        middleware.interpret(bot, newMessage, function(){
           //send results to user
           processWatsonResponse(bot, newMessage);
         });

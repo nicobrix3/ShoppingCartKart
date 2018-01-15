@@ -15,8 +15,8 @@
  */
 
 var Botkit = require('botkit');
-var clone = require('clone');
-var Promise = require('bluebird');
+//var clone = require('clone');
+//var Promise = require('bluebird');
 
 /*var watsonMiddleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
@@ -87,6 +87,10 @@ controller.on('message_received', processWatsonResponse);
     processWatsonResponse(bot, message);
   }
 });*/
+
+controller.hears('(.*)', 'message_received', function(bot, message) {
+  bot.reply(message, message.watsonData.output.text.join('\n'));
+});
 
 //controller.hears('(.*)', 'message_received', processWatsonResponse); // trying out this line of code
 

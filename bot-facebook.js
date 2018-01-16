@@ -15,6 +15,7 @@
  */
 
 var Botkit = require('botkit');
+var clone = require('clone');
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,

@@ -16,10 +16,12 @@
 
 var Botkit = require('botkit');
 var clone = require('clone');
+var mongoStorage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables:['userdata']});
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
-  verify_token: process.env.FB_VERIFY_TOKEN
+  verify_token: process.env.FB_VERIFY_TOKEN,
+  storage: mongoStorage
 });
 
 var bot = controller.spawn();
@@ -37,11 +39,13 @@ var processWatsonResponse = function(bot, message){
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
 
+  bot.reply(message, message.watsonData.output.text.join('\n'));
+
   if(typeof message.watsonData.output !== 'undefined') {
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
     
-    if(message.watsonData.output.action === 'check_balance'){
+    /* if(message.watsonData.output.action === 'check_balance'){
       var newMessage = clone(message);
       newMessage.text = 'hello';
       //send to Watson
@@ -49,7 +53,7 @@ var processWatsonResponse = function(bot, message){
         //send results to user
         processWatsonResponse(bot, newMessage);
       });
-    }
+    } */
   }
 };
 

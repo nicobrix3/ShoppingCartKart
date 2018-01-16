@@ -24,6 +24,13 @@ var controller = Botkit.facebookbot({
 
 var bot = controller.spawn();
 
+var middleware = require('botkit-middleware-watson')({
+  username: process.env.CONVERSATION_USERNAME,
+  password: process.env.CONVERSATION_PASSWORD,
+  workspace_id: process.env.WORKSPACE_ID,
+  url: process.env.CONVERSATION_URL || 'https://gateway.watsonplatform.net/conversation/api',
+  version_date: '2017-05-26'
+});
 
 var processWatsonResponse = function(bot, message){
   if(message.watsonError){

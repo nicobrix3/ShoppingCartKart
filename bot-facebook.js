@@ -16,12 +16,10 @@
 
 var Botkit = require('botkit');
 var clone = require('clone');
-//var mongoStorage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables:['userdata']});
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
   verify_token: process.env.FB_VERIFY_TOKEN,
-  //storage: mongoStorage
 });
 
 var bot = controller.spawn();
@@ -45,15 +43,15 @@ var processWatsonResponse = function(bot, message){
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
     
-    /* if(message.watsonData.output.action === 'check_balance'){
+    if(message.watsonData.output.action === 'check_balance'){
       var newMessage = clone(message);
-      newMessage.text = 'hello';
+      newMessage.text = 'check the name';
       //send to Watson
       middleware.interpret(bot, newMessage, function(){
         //send results to user
         processWatsonResponse(bot, newMessage);
       });
-    } */
+    }
   }
 };
 

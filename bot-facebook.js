@@ -41,7 +41,7 @@ var processWatsonResponse = function(bot, message){
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
     
-    if(message.watsonData.output.action === 'check_balance'){
+    /*if(message.watsonData.output.action === 'check_balance'){
       var newMessage = clone(message);
       newMessage.text = 'check new name';
       //send to Watson
@@ -49,7 +49,7 @@ var processWatsonResponse = function(bot, message){
         //send results to user
         processWatsonResponse(bot, newMessage);
       });
-    }
+    }*/
   }
 };
 

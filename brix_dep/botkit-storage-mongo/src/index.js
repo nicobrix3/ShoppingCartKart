@@ -51,7 +51,7 @@ function getStorage(db, zone) {
 
     return {
         get: function(id, cb) {
-            return table.findOne({fbid: id}, cb);
+            return table.findOne({channelId: id}, cb);
         },
         save: function(data, cb) {
             return table.findOneAndUpdate({

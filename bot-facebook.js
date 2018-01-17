@@ -34,16 +34,27 @@ var middleware = require('botkit-middleware-watson')({
 });
 
 var processWatsonResponse = function(bot, message){
+  console.log("Just heard the following message: " + JSON.stringify(message));
+  var lastActivityTime = new Date();
+  console.log("Date: " + JSON.stringify(lastActivityTime));
   if(message.watsonError){
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
-
   //bot.reply(message, message.watsonData.output.text.join('\n'));
 
   if(typeof message.watsonData.output !== 'undefined') {
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
-    
+
+    storage.channels.save({id: message.channel, date: lastActivityTime}, function(err) {
+      if(err){
+        console.log("Warning: error saving channel details: " + JSON.stringify(err));
+      }
+      else{
+        console.log("Success saving channel detail.");
+      }
+    });
+
     if(message.watsonData.output.action === 'check_balance'){
       var newMessage = clone(message);
       newMessage.text = 'check the name';

@@ -67,13 +67,16 @@ module.exports = function(app) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
     
     storage.channels.get(message.channel, function(err,data){
+      console.log(JSON.stringify(message.channel));
       if(err){
-        console.log("Warning: error retrieving channel: " + channelId + " is: " + JSON.stringify(err));
+        console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
       } else {
         if(!data || data === null){
-          data = {id: message.channelId};
+          data = {id: message.channel};
         }
+
         console.log("Successfully retrieved conversation history...");
+
         if(data && data.date) {
           const lastActivityDate = new Date(data.date);
           const now = new Date();

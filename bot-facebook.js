@@ -46,7 +46,7 @@ var processWatsonResponse = function(bot, message){
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
 
-    storage.channels.save({id: message.channel, date: lastActivityTime}, function(err) {
+    storage.channels.save({channelId: message.channel, date: lastActivityTime}, function(err) {
       if(err){
         console.log("Warning: error saving channel details: " + JSON.stringify(err));
       }

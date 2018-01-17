@@ -16,10 +16,7 @@
 
 var Botkit = require('botkit');
 var clone = require('clone');
-var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
-var d = new Date();
-d.setMilliseconds(3000);
-var maxElapsedUnits = d.getMilliseconds();
+//var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
@@ -38,8 +35,7 @@ var middleware = require('botkit-middleware-watson')({
 
 var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
-  var lastActivityTime = new Date();
-  console.log("Date: " + JSON.stringify(lastActivityTime));
+  
   if(message.watsonError){
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
@@ -48,37 +44,6 @@ var processWatsonResponse = function(bot, message){
   if(typeof message.watsonData.output !== 'undefined') {
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
-
-    storage.channels.get(message.channel, function(err,data){
-      if(err){
-        console.log("Warning: error retrieving channel: " + channelId + " is: " + JSON.stringify(err));
-      } else {
-        if(!data || data === null){
-          data = {id: message.channelId};
-        }
-        console.log("Successfully retrieved conversation history...");
-        if(data && data.date) {
-          const lastActivityDate = new Data(data.date);
-          const now = new Data();
-          const millisecondsElapsed = now.getTime() - lastActivityDate.getTime();
-          console.log("Milliseconds Elapsed: " + JSON.stringify(millisecondsElapsed));
-          if(millisecondsElapsed > maxElapsedUnits) {
-            console.log("Should end the conversation.");
-          } else{
-            console.log("Continue conversation");
-          }
-        }
-      }
-    })
-
-    storage.channels.save({channelId: message.channel, date: lastActivityTime}, function(err) {
-      if(err){
-        console.log("Warning: error saving channel details: " + JSON.stringify(err));
-      }
-      else{
-        console.log("Success saving channel detail.");
-      }
-    });
 
     if(message.watsonData.output.action === 'check_balance'){
       var newMessage = clone(message);

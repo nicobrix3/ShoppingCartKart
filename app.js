@@ -17,6 +17,9 @@
 require('dotenv').load();
 var clone = require('clone');
 var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
+var d = new Date();
+d.setMilliseconds(3000);
+var maxElapsedUnits = d.getMilliseconds();
 var fname;
 
 function checkBalance(conversationResponse, callback) {
@@ -54,24 +57,61 @@ module.exports = function(app) {
     console.log('Twilio bot is live');
   }
 
-  storage.users.get('11111', function(error, beans){
+  /*storage.users.get('11111', function(error, beans){
     fname = beans.firstname;
-  });
+  });*/
 
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     console.log("First Name: " + JSON.stringify(fname));
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
+    
+    storage.channels.get(message.channel, function(err,data){
+      if(err){
+        console.log("Warning: error retrieving channel: " + channelId + " is: " + JSON.stringify(err));
+      } else {
+        if(!data || data === null){
+          data = {id: message.channelId};
+        }
+        console.log("Successfully retrieved conversation history...");
+        if(data && data.date) {
+          const lastActivityDate = new Data(data.date);
+          const now = new Data();
+          const millisecondsElapsed = now.getTime() - lastActivityDate.getTime();
+          console.log("Milliseconds Elapsed: " + millisecondsElapsed);
+          console.log("Max Elapsed Units: " + maxElapsedUnits);
+          if(millisecondsElapsed > maxElapsedUnits) {
+            console.log("Should end the conversation.");
+          } else{
+            console.log("Continue conversation");
+          }
+        }
+      }
+    });
+
     callback(null, conversationPayload);
   };
 
   middleware.after = function(message, conversationResponse, callback) {
-    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
+    /* if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'check_balance'){
         return checkBalance(conversationResponse, callback);
       }
-    }
+    } */ //code na mo change sa user_name context
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
+
+    var lastActivityTime = new Date();
+    console.log("Date: " + JSON.stringify(lastActivityTime));
+
+    storage.channels.save({channelId: message.channel, date: lastActivityTime}, function(err) {
+      if(err){
+        console.log("Warning: error saving channel details: " + JSON.stringify(err));
+      }
+      else{
+        console.log("Success saving channel detail.");
+      }
+    });
+
     callback(null, conversationResponse);
   };
 };//comment

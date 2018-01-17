@@ -93,11 +93,11 @@ module.exports = function(app) {
   };
 
   middleware.after = function(message, conversationResponse, callback) {
-    /* if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
+    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'check_balance'){
         return checkBalance(conversationResponse, callback);
       }
-    } */ //code na mo change sa user_name context
+    }
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
 
     var lastActivityTime = new Date();

@@ -77,10 +77,10 @@ module.exports = function(app) {
 
         console.log("Successfully retrieved conversation history...");
 
-        if(data && data.date) {
+        //if(data && data.date) {
           const lastActivityDate = new Date(data.date);
           const now = new Date();
-          const millisecondsElapsed = now.getTime() - lastActivityDate.getTime();
+          const millisecondsElapsed = now.getMilliseconds() - lastActivityDate.getMilliseconds();
           console.log("Milliseconds Elapsed: " + millisecondsElapsed);
           console.log("Max Elapsed Units: " + maxElapsedUnits);
           if(millisecondsElapsed > maxElapsedUnits) {
@@ -88,7 +88,7 @@ module.exports = function(app) {
           } else{
             console.log("Continue conversation");
           }
-        }
+        //}
       }
     });
 

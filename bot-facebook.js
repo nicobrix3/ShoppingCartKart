@@ -16,11 +16,11 @@
 
 var Botkit = require('botkit');
 var clone = require('clone');
-var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
+/*var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 //var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 var d = new Date();
 d.setSeconds(5);
-var maxElapsedUnits = d.getSeconds();
+var maxElapsedUnits = d.getSeconds();*/
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
@@ -49,7 +49,7 @@ var processWatsonResponse = function(bot, message){
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
 
-    storage.channels.get(message.channel, function(err,data){
+    /*storage.channels.get(message.channel, function(err,data){
       console.log(JSON.stringify(message.channel));
       console.log("data: " + JSON.stringify(data));
       if(err){
@@ -74,7 +74,7 @@ var processWatsonResponse = function(bot, message){
           }
         }
       }
-    });
+    });*/
 
     if(message.watsonData.output.action === 'check_balance'){
       var newMessage = clone(message);

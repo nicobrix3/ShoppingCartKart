@@ -16,9 +16,11 @@
 
 require('dotenv').load();
 var clone = require('clone');
-//var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
-var fname;
+//var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
+var d = new Date();
+d.setSeconds(5);
+var maxElapsedUnits = d.getSeconds();
 
 function checkBalance(conversationResponse, callback) {
   //middleware.after function must pass a complete Watson respose to callback
@@ -64,8 +66,9 @@ module.exports = function(app) {
     console.log("First Name: " + JSON.stringify(fname));
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
     
-    /*storage.channels.get(message.channel, function(err,data){
+    storage.channels.get(message.channel, function(err,data){
       console.log(JSON.stringify(message.channel));
+      console.log("data: " + JSON.stringify(data));
       if(err){
         console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
       } else {
@@ -75,20 +78,20 @@ module.exports = function(app) {
 
         console.log("Successfully retrieved conversation history...");
 
-        //if(data && data.date) {
-          const lastActivityDate = new Date(data.date);
-          const now = new Date();
-          const millisecondsElapsed = now.getMilliseconds() - lastActivityDate.getMilliseconds();
-          console.log("Milliseconds Elapsed: " + millisecondsElapsed);
-          console.log("Max Elapsed Units: " + maxElapsedUnits);
-          if(millisecondsElapsed > maxElapsedUnits) {
+        if(data && data.date) {
+          var lastActivityDate = new Date(data.date);
+          var now = new Date();
+          var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
+          console.log("Seconds Elapsed: " + secondsElapsed);
+          console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
+          if(secondsElapsed > maxElapsedUnits) {
             console.log("Should end the conversation.");
           } else{
             console.log("Continue conversation");
           }
-        //}
+        }
       }
-    });*/
+    });
 
     callback(null, conversationPayload);
   };

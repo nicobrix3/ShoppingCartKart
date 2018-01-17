@@ -16,7 +16,10 @@
 
 var Botkit = require('botkit');
 var clone = require('clone');
-//var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
+var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
+var d = new Date();
+d.setSeconds(5);
+var maxElapsedUnits = d.getSeconds();
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
@@ -44,6 +47,33 @@ var processWatsonResponse = function(bot, message){
   if(typeof message.watsonData.output !== 'undefined') {
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
+
+    storage.channels.get(message.channel, function(err,data){
+      console.log(JSON.stringify(message.channel));
+      console.log("data: " + JSON.stringify(data));
+      if(err){
+        console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
+      } else {
+        if(!data || data === null){
+          data = {channelId: message.channel};
+        }
+
+        console.log("Successfully retrieved conversation history...");
+
+        if(data && data.date) {
+          const lastActivityDate = new Date(data.date);
+          const now = new Date();
+          const secondsElapsed = now.getSeconds() - lastActivityDate.getSeconds();
+          console.log("Seconds Elapsed: " + secondsElapsed);
+          console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
+          if(millisecondsElapsed > maxElapsedUnits) {
+            console.log("Should end the conversation.");
+          } else{
+            console.log("Continue conversation");
+          }
+        }
+      }
+    });
 
     if(message.watsonData.output.action === 'check_balance'){
       var newMessage = clone(message);

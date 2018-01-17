@@ -17,9 +17,6 @@
 require('dotenv').load();
 var clone = require('clone');
 var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
-var d = new Date();
-d.setMilliseconds(3000);
-var maxElapsedUnits = d.getMilliseconds();
 var fname;
 
 function checkBalance(conversationResponse, callback) {
@@ -66,7 +63,7 @@ module.exports = function(app) {
     console.log("First Name: " + JSON.stringify(fname));
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
     
-    storage.channels.get(message.channel, function(err,data){
+    /*storage.channels.get(message.channel, function(err,data){
       console.log(JSON.stringify(message.channel));
       if(err){
         console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
@@ -90,7 +87,7 @@ module.exports = function(app) {
           }
         //}
       }
-    });
+    });*/
 
     callback(null, conversationPayload);
   };

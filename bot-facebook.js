@@ -57,7 +57,7 @@ var processWatsonResponse = function(bot, message){
           data = {id: message.channelId};
         }
         console.log("Successfully retrieved conversation history...");
-        if(data && data.lastActivityTime) {
+        if(data && data.date) {
           const lastActivityDate = new Data(data.date);
           const now = new Data();
           const millisecondsElapsed = now.getTime() - lastActivityDate.getTime();

@@ -62,12 +62,13 @@ var processWatsonResponse = function(bot, message){
         console.log("Successfully retrieved conversation history...");
 
         if(data && data.date) {
-          const lastActivityDate = new Date(data.date);
-          const now = new Date();
-          const secondsElapsed = now.getSeconds() - lastActivityDate.getSeconds();
-          console.log("Seconds Elapsed: " + secondsElapsed);
+          var lastActivityDate = new Date(data.date);
+          var now = new Date();
+          var secondsElapsed = now.getDate() - lastActivityDate.getDate();
+          var finalElapsed = secondsElapsed / 1000;
+          console.log("Seconds Elapsed: " + finalElapsed);
           console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
-          if(secondsElapsed > maxElapsedUnits) {
+          if(finalElapsed > maxElapsedUnits) {
             console.log("Should end the conversation.");
           } else{
             console.log("Continue conversation");

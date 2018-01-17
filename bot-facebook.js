@@ -64,9 +64,8 @@ var processWatsonResponse = function(bot, message){
         if(data && data.date) {
           var lastActivityDate = new Date(data.date);
           var now = new Date();
-          var secondsElapsed = now.getDate() - lastActivityDate.getDate();
-          var finalElapsed = secondsElapsed / 1000;
-          console.log("Seconds Elapsed: " + finalElapsed);
+          var secondsElapsed = (now.getDate() - lastActivityDate.getDate())/1000;
+          console.log("Seconds Elapsed: " + secondsElapsed);
           console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
           if(finalElapsed > maxElapsedUnits) {
             console.log("Should end the conversation.");

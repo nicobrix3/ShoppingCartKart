@@ -55,7 +55,7 @@ var processWatsonResponse = function(bot, message){
         console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
       } else {
         if(!data || data === null){
-          data = {channelId: message.channel};
+          data = {id: message.channel};
         }
 
         console.log("Successfully retrieved conversation history...");

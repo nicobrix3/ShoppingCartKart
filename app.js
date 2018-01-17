@@ -74,7 +74,7 @@ module.exports = function(app) {
           data = {id: message.channelId};
         }
         console.log("Successfully retrieved conversation history...");
-        if(data && data.date) {
+        //if(data && data.date) {
           const lastActivityDate = new Data(data.date);
           const now = new Data();
           const millisecondsElapsed = now.getTime() - lastActivityDate.getTime();
@@ -85,7 +85,7 @@ module.exports = function(app) {
           } else{
             console.log("Continue conversation");
           }
-        }
+        //}
       }
     });
 

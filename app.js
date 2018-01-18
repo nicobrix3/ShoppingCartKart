@@ -66,7 +66,7 @@ module.exports = function(app) {
     console.log("First Name: " + JSON.stringify(fname));
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
     
-    storage.channels.get(message.channel, function(err,data){
+    /*storage.channels.get(message.channel, function(err,data){
       console.log(JSON.stringify(message.channel));
       console.log("data: " + JSON.stringify(data));
       if(err){
@@ -91,7 +91,7 @@ module.exports = function(app) {
           }
         }
       }
-    });
+    }); */
 
     callback(null, conversationPayload);
   };

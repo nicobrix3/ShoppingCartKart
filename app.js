@@ -87,12 +87,9 @@ module.exports = function(app) {
           console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
           if(secondsElapsed > maxElapsedUnits) {
             console.log("Should end the conversation.");
-            //end the conversation
-            var endMessage = clone(message);
-            endMessage.text = 'time out';
-            middleware.interpret(bot, endMessage, function(){
-              Facebook.processWatsonResponse(bot, endMessage);
-            });
+            //end the conversation.
+            
+            
             //conversation ended
           } else{
             console.log("Continue conversation");

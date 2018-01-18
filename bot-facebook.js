@@ -49,6 +49,13 @@ var processWatsonResponse = function(bot, message){
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
 
+    function endConversation(){ //ARI NI HUNONG
+      var endMessage = clone(message);
+      endMessage.text = 'time out';
+      middleware.interpret(bot, endMessage, function(){
+        processWatsonResponse(bot, endMessage);
+      });
+    }
     /*storage.channels.get(message.channel, function(err,data){
       console.log(JSON.stringify(message.channel));
       console.log("data: " + JSON.stringify(data));

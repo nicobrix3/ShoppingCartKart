@@ -19,7 +19,7 @@ var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 //var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 var d = new Date();
-d.setSeconds(5);
+d.setSeconds(15);
 var maxElapsedUnits = d.getSeconds();
 var fname = "Boi";
 
@@ -87,6 +87,13 @@ module.exports = function(app) {
           console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
           if(secondsElapsed > maxElapsedUnits) {
             console.log("Should end the conversation.");
+            //end the conversation
+            var endMessage = clone(message);
+            endMessage.text = 'time out';
+            middleware.interpret(bot, endMessage, function(){
+              Facebook.processWatsonResponse(bot, endMessage);
+            });
+            //conversation ended
           } else{
             console.log("Continue conversation");
           }

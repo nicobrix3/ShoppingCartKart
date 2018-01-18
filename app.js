@@ -18,9 +18,10 @@ require('dotenv').load();
 var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 //var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
-var d = new Date();
+/*var d = new Date();
 d.setSeconds(5);
-var maxElapsedUnits = d.getSeconds();
+var maxElapsedUnits = d.getSeconds();*/
+var fname = "Boi";
 
 function checkBalance(conversationResponse, callback) {
   //middleware.after function must pass a complete Watson respose to callback

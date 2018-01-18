@@ -37,7 +37,7 @@ var middleware = require('botkit-middleware-watson')({
   version_date: '2017-05-26'
 });
 
-var processWatsonResponse = function(bot, message){
+/*var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
   if(message.watsonError){
     console.log("Watson Error: " + JSON.stringify(message.watsonError));
@@ -86,13 +86,13 @@ var processWatsonResponse = function(bot, message){
       });
     }
   }
-};
+};*/
 
-/*controller.hears('(.*)', 'message_received', function(bot, message) {
+controller.hears('(.*)', 'message_received', function(bot, message) {
   bot.reply(message, message.watsonData.output.text.join('\n'));
-});*/
+});
 
-controller.on('message_received', processWatsonResponse);
+//controller.on('message_received', processWatsonResponse);
 
 module.exports.controller = controller;
 module.exports.bot = bot;

@@ -37,6 +37,14 @@ var middleware = require('botkit-middleware-watson')({
   version_date: '2017-05-26'
 });
 
+function endConversation(){
+  var endMessage = clone(message);
+  endMessage.text = 'time out';
+  middleware.interpret(bot, endMessage, function(){
+    processWatsonResponse(bot, endMessage);
+  });
+}
+
 var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
   if(message.watsonError){
@@ -48,14 +56,6 @@ var processWatsonResponse = function(bot, message){
   if(typeof message.watsonData.output !== 'undefined') {
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
-
-    function endConversation(){ //ARI NI HUNONG
-      var endMessage = clone(message);
-      endMessage.text = 'time out';
-      middleware.interpret(bot, endMessage, function(){
-        processWatsonResponse(bot, endMessage);
-      });
-    }
 
     storage.channels.get(message.channel, function(err,data){
       console.log(JSON.stringify(message.channel));
@@ -77,6 +77,7 @@ var processWatsonResponse = function(bot, message){
           console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
           if(secondsElapsed > maxElapsedUnits) {
             console.log("Should end the conversation.");
+            endConversation();
           } else{
             console.log("Continue conversation");
           }

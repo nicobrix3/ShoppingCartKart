@@ -21,6 +21,7 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var d = new Date();
 d.setSeconds(5);
 var maxElapsedUnits = d.getSeconds();
+var enderTruth = false;
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
@@ -37,6 +38,15 @@ var middleware = require('botkit-middleware-watson')({
   version_date: '2017-05-26'
 });
 
+function endConversation(message){
+  enderTruth = true;
+  var endMessage = clone(message);
+  endMessage.text = 'time out';
+  middleware.interpret(bot, endMessage, function(){
+    processWatsonResponse(bot, endMessage);
+  });
+}
+
 var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
   if(message.watsonError){
@@ -44,56 +54,49 @@ var processWatsonResponse = function(bot, message){
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
   //bot.reply(message, message.watsonData.output.text.join('\n'));
+  if(enderTruth == false){
+    if(typeof message.watsonData.output !== 'undefined') {
+      //send please wait to user
 
-  if(typeof message.watsonData.output !== 'undefined') {
-    //send please wait to user
-    
-    function endConversation(message){
-      var endMessage = clone(message);
-      endMessage.text = 'time out';
-      middleware.interpret(bot, endMessage, function(){
-        processWatsonResponse(bot, endMessage);
-      });
-    }
-    
-    bot.reply(message, message.watsonData.output.text.join('\n'));
+      bot.reply(message, message.watsonData.output.text.join('\n'));
 
-    /* storage.channels.get(message.channel, function(err,data){
-      console.log(JSON.stringify(message.channel));
-      console.log("data: " + JSON.stringify(data));
-      if(err){
-        console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
-      } else {
-        if(!data || data === null){
-          data = {id: message.channel};
-        }
+      /* storage.channels.get(message.channel, function(err,data){
+        console.log(JSON.stringify(message.channel));
+        console.log("data: " + JSON.stringify(data));
+        if(err){
+          console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
+        } else {
+          if(!data || data === null){
+            data = {id: message.channel};
+          }
 
-        console.log("Successfully retrieved conversation history...");
+          console.log("Successfully retrieved conversation history...");
 
-        if(data && data.date) {
-          var lastActivityDate = new Date(data.date);
-          var now = new Date();
-          var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
-          console.log("Seconds Elapsed: " + secondsElapsed);
-          console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
-          if(secondsElapsed > maxElapsedUnits) {
-            console.log("Should end the conversation.");
-            endConversation();
-          } else{
-            console.log("Continue conversation");
+          if(data && data.date) {
+            var lastActivityDate = new Date(data.date);
+            var now = new Date();
+            var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
+            console.log("Seconds Elapsed: " + secondsElapsed);
+            console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
+            if(secondsElapsed > maxElapsedUnits) {
+              console.log("Should end the conversation.");
+              endConversation();
+            } else{
+              console.log("Continue conversation");
+            }
           }
         }
-      }
-    }); */
+      }); */
 
-    if(message.watsonData.output.action === 'check_balance'){
-      var newMessage = clone(message);
-      newMessage.text = 'check the name';
-      //send to Watson
-      middleware.interpret(bot, newMessage, function(){
-        //send results to user
-        processWatsonResponse(bot, newMessage);
-      });
+      if(message.watsonData.output.action === 'check_balance'){
+        var newMessage = clone(message);
+        newMessage.text = 'check the name';
+        //send to Watson
+        middleware.interpret(bot, newMessage, function(){
+          //send results to user
+          processWatsonResponse(bot, newMessage);
+        });
+      }
     }
   }
 };

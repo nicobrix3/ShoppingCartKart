@@ -37,14 +37,6 @@ var middleware = require('botkit-middleware-watson')({
   version_date: '2017-05-26'
 });
 
-function endConversation(message){
-  var endMessage = clone(message);
-  endMessage.text = 'time out';
-  middleware.interpret(bot, endMessage, function(){
-    processWatsonResponse(bot, endMessage);
-  });
-}
-
 var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
   if(message.watsonError){
@@ -55,6 +47,15 @@ var processWatsonResponse = function(bot, message){
 
   if(typeof message.watsonData.output !== 'undefined') {
     //send please wait to user
+    
+    function endConversation(message){
+      var endMessage = clone(message);
+      endMessage.text = 'time out';
+      middleware.interpret(bot, endMessage, function(){
+        processWatsonResponse(bot, endMessage);
+      });
+    }
+    
     bot.reply(message, message.watsonData.output.text.join('\n'));
 
     /* storage.channels.get(message.channel, function(err,data){

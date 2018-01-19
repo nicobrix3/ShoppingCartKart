@@ -49,6 +49,7 @@ function endConversation(message){
 
 var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
+  console.log("Ender Truth: " + enderTruth);
   if(message.watsonError){
     console.log("Watson Error: " + JSON.stringify(message.watsonError));
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
@@ -106,8 +107,8 @@ var processWatsonResponse = function(bot, message){
 });*/
 
 controller.on('message_received', processWatsonResponse);
-
 enderTruth = 0;
+
 module.exports.controller = controller;
 module.exports.bot = bot;
 module.exports.endConversation = endConversation;

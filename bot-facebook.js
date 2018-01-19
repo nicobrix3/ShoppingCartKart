@@ -37,7 +37,7 @@ var middleware = require('botkit-middleware-watson')({
   version_date: '2017-05-26'
 });
 
-function endConversation(){
+function endConversation(bot, message){
   var endMessage = clone(message);
   endMessage.text = 'time out';
   middleware.interpret(bot, endMessage, function(){

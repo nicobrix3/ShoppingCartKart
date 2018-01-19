@@ -21,7 +21,6 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var d = new Date();
 d.setSeconds(5);
 var maxElapsedUnits = d.getSeconds();
-var enderTruth = 0;
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
@@ -39,7 +38,6 @@ var middleware = require('botkit-middleware-watson')({
 });
 
 function endConversation(message){
-  enderTruth = 1;
   var endMessage = clone(message);
   endMessage.text = 'time out';
   middleware.interpret(bot, endMessage, function(){
@@ -49,45 +47,14 @@ function endConversation(message){
 
 var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
-  console.log("Ender Truth: " + enderTruth);
   if(message.watsonError){
     console.log("Watson Error: " + JSON.stringify(message.watsonError));
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
-  //bot.reply(message, message.watsonData.output.text.join('\n'));
-  //if(enderTruth == 0){
     if(typeof message.watsonData.output !== 'undefined') {
       //send please wait to user
-
+      console.log("Message: " + JSON.stringify(message));
       bot.reply(message, message.watsonData.output.text.join('\n'));
-
-      /* storage.channels.get(message.channel, function(err,data){
-        console.log(JSON.stringify(message.channel));
-        console.log("data: " + JSON.stringify(data));
-        if(err){
-          console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
-        } else {
-          if(!data || data === null){
-            data = {id: message.channel};
-          }
-
-          console.log("Successfully retrieved conversation history...");
-
-          if(data && data.date) {
-            var lastActivityDate = new Date(data.date);
-            var now = new Date();
-            var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
-            console.log("Seconds Elapsed: " + secondsElapsed);
-            console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
-            if(secondsElapsed > maxElapsedUnits) {
-              console.log("Should end the conversation.");
-              endConversation();
-            } else{
-              console.log("Continue conversation");
-            }
-          }
-        }
-      }); */
 
       if(message.watsonData.output.action === 'check_balance'){
         var newMessage = clone(message);
@@ -106,8 +73,10 @@ var processWatsonResponse = function(bot, message){
   bot.reply(message, message.watsonData.output.text.join('\n'));
 });*/
 
+controller.hears('timeout', 'message_received', middleware.hear, function(bot, message){
+  console.log("TIMEOUT HEARD! DETECTED TIMEOUT!");
+});
 controller.on('message_received', processWatsonResponse);
-enderTruth = 0;
 
 module.exports.controller = controller;
 module.exports.bot = bot;

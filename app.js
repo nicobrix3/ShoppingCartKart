@@ -64,12 +64,12 @@ module.exports = function(app) {
 
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
-    console.log("First Name: " + JSON.stringify(fname));
+    //console.log("First Name: " + JSON.stringify(fname));
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
     
     storage.channels.get(message.channel, function(err,data){
-      console.log(JSON.stringify(message.channel));
-      console.log("data: " + JSON.stringify(data));
+      //console.log(JSON.stringify(message.channel));
+      //console.log("data: " + JSON.stringify(data));
       if(err){
         console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
       } else {

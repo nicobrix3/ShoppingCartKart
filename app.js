@@ -88,7 +88,7 @@ module.exports = function(app) {
           if(secondsElapsed > maxElapsedUnits) {
             console.log("Should end the conversation.");
             //end the conversation.
-            Facebook.endConversation();
+            Facebook.endConversation(message);
             //conversation ended
           } else{
             console.log("Continue conversation");

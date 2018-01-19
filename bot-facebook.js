@@ -21,7 +21,7 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var d = new Date();
 d.setSeconds(5);
 var maxElapsedUnits = d.getSeconds();
-var enderTruth = false;
+var enderTruth = 0;
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
@@ -39,7 +39,7 @@ var middleware = require('botkit-middleware-watson')({
 });
 
 function endConversation(message){
-  enderTruth = true;
+  enderTruth = 1;
   var endMessage = clone(message);
   endMessage.text = 'time out';
   middleware.interpret(bot, endMessage, function(){
@@ -54,7 +54,7 @@ var processWatsonResponse = function(bot, message){
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
   //bot.reply(message, message.watsonData.output.text.join('\n'));
-  if(enderTruth == false){
+  if(enderTruth === 0){
     if(typeof message.watsonData.output !== 'undefined') {
       //send please wait to user
 
@@ -107,6 +107,7 @@ var processWatsonResponse = function(bot, message){
 
 controller.on('message_received', processWatsonResponse);
 
+enderTruth = 0;
 module.exports.controller = controller;
 module.exports.bot = bot;
 module.exports.endConversation = endConversation;

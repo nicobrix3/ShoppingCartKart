@@ -67,7 +67,7 @@ module.exports = function(app) {
     console.log("First Name: " + JSON.stringify(fname));
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
     
-    /*storage.channels.get(message.channel, function(err,data){
+    storage.channels.get(message.channel, function(err,data){
       console.log(JSON.stringify(message.channel));
       console.log("data: " + JSON.stringify(data));
       if(err){
@@ -84,18 +84,18 @@ module.exports = function(app) {
           var now = new Date();
           var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
           console.log("Seconds Elapsed: " + secondsElapsed);
-          console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
+          //console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
           if(secondsElapsed > maxElapsedUnits) {
             console.log("Should end the conversation.");
             //end the conversation.
-
+            Facebook.endConversation();
             //conversation ended
           } else{
             console.log("Continue conversation");
           }
         }
       }
-    });*/
+    });
 
     callback(null, conversationPayload);
   };

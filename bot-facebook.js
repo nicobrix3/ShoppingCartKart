@@ -57,7 +57,7 @@ var processWatsonResponse = function(bot, message){
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
 
-    storage.channels.get(message.channel, function(err,data){
+    /* storage.channels.get(message.channel, function(err,data){
       console.log(JSON.stringify(message.channel));
       console.log("data: " + JSON.stringify(data));
       if(err){
@@ -83,7 +83,7 @@ var processWatsonResponse = function(bot, message){
           }
         }
       }
-    });
+    }); */
 
     if(message.watsonData.output.action === 'check_balance'){
       var newMessage = clone(message);
@@ -105,3 +105,4 @@ controller.on('message_received', processWatsonResponse);
 
 module.exports.controller = controller;
 module.exports.bot = bot;
+module.exports.endConversation = endConversation;

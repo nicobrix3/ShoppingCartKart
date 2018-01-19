@@ -54,7 +54,7 @@ var processWatsonResponse = function(bot, message){
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
   //bot.reply(message, message.watsonData.output.text.join('\n'));
-  if(enderTruth === 0){
+  if(enderTruth == 0){
     if(typeof message.watsonData.output !== 'undefined') {
       //send please wait to user
 

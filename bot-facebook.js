@@ -38,12 +38,14 @@ var middleware = require('botkit-middleware-watson')({
 });
 
 function endConversation(message){
+  console.log("Trying to end conversation");
   var endMessage = clone(message);
   endMessage.text = 'time out';
   middleware.interpret(bot, endMessage, function(){
     //processWatsonResponse(bot, endMessage);
     bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
   });
+  console.log("Conversation ended");
 }
 
 var processWatsonResponse = function(bot, message){

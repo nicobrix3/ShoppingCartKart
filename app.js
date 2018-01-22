@@ -61,7 +61,7 @@ module.exports = function(app) {
     console.log('Twilio bot is live');
   }
 
-  storage.channels.get('1772861762745413', function(error, beans){
+  /*storage.channels.get('1772861762745413', function(error, beans){
     username = beans.contextVar.user_name;
     shoeBrand = beans.contextVar.shoe_brand;
     shoeType = beans.contextVar.shoe_type;
@@ -71,7 +71,7 @@ module.exports = function(app) {
   console.log("user_name: " + JSON.stringify(username));
   console.log("shoe_brand: " + JSON.stringify(shoeBrand));
   console.log("shoe_type: " + JSON.stringify(shoeType));
-  console.log("shoe_color: " + JSON.stringify(shoeColor));
+  console.log("shoe_color: " + JSON.stringify(shoeColor));*/
 
   /*console.log("user_name: " + username);
   console.log("shoe_brand: " + shoeBrand);
@@ -82,6 +82,18 @@ module.exports = function(app) {
   middleware.before = function(message, conversationPayload, callback) {
     //console.log("First Name: " + JSON.stringify(fname));
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
+
+    storage.channels.get(message.channel, function(error, beans){
+      username = beans.contextVar.user_name;
+      shoeBrand = beans.contextVar.shoe_brand;
+      shoeType = beans.contextVar.shoe_type;
+      shoeColor = beans.contextVar.shoe_color;
+    });
+
+    console.log("user_name: " + username);
+    console.log("shoe_brand: " + shoeBrand);
+    console.log("shoe_type: " + shoeType);
+    console.log("shoe_color: " + shoeColor);
     
     storage.channels.get(message.channel, function(err,data){
       //console.log(JSON.stringify(message.channel));

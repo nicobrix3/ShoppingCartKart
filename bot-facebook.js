@@ -55,7 +55,7 @@ var processWatsonResponse = function(bot, message){
     if(typeof message.watsonData.output !== 'undefined') {
       //send please wait to user
       console.log("Message: " + JSON.stringify(message));
-      //bot.reply(message, message.watsonData.output.text.join('\n'));
+      bot.reply(message, message.watsonData.output.text.join('\n'));
 
       if(message.watsonData.output.action === 'check_balance'){
         var newMessage = clone(message);
@@ -63,7 +63,7 @@ var processWatsonResponse = function(bot, message){
         //send to Watson
         middleware.interpret(bot, newMessage, function(){
           //send results to user
-          processWatsonResponse(bot, newMessage);
+          bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
         });
       }
     }

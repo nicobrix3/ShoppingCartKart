@@ -83,7 +83,7 @@ module.exports = function(app) {
     //console.log("First Name: " + JSON.stringify(fname));
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
 
-    storage.channels.get(message.channel, function(error, beans){
+    /*storage.channels.get(message.channel, function(error, beans){
       username = beans.contextVar.user_name;
       shoeBrand = beans.contextVar.shoe_brand;
       shoeType = beans.contextVar.shoe_type;
@@ -93,7 +93,7 @@ module.exports = function(app) {
     console.log("user_name: " + username);
     console.log("shoe_brand: " + shoeBrand);
     console.log("shoe_type: " + shoeType);
-    console.log("shoe_color: " + shoeColor);
+    console.log("shoe_color: " + shoeColor);*/
     
     storage.channels.get(message.channel, function(err,data){
       //console.log(JSON.stringify(message.channel));
@@ -145,6 +145,18 @@ module.exports = function(app) {
         console.log("Success saving channel detail.");
       }
     });
+
+    storage.channels.get(message.channel, function(error, beans){
+      username = beans.contextVar.user_name;
+      shoeBrand = beans.contextVar.shoe_brand;
+      shoeType = beans.contextVar.shoe_type;
+      shoeColor = beans.contextVar.shoe_color;
+    });
+
+    console.log("user_name: " + username);
+    console.log("shoe_brand: " + shoeBrand);
+    console.log("shoe_type: " + shoeType);
+    console.log("shoe_color: " + shoeColor);
 
     callback(null, conversationResponse);
   };

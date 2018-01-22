@@ -115,12 +115,11 @@ module.exports = function(app) {
 
     var lastActivityTime = new Date();
     console.log("Date: " + JSON.stringify(lastActivityTime));
+    console.log("user_name: " + JSON.stringify(username));
+    console.log("shoe_brand: " + JSON.stringify(shoe_brand));
+    console.log("shoe_type: " + JSON.stringify(shoeType));
+    console.log("shoe_color: " + JSON.stringify(shoeColor));
 
-    console.log("user_name: " + username);
-    console.log("shoe_brand: " + shoe_brand);
-    console.log("shoe_type: " + shoeType);
-    console.log("shoe_color: " + shoeColor);
-    
     storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
       if(err){
         console.log("Warning: error saving channel details: " + JSON.stringify(err));

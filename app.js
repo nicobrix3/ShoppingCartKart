@@ -21,7 +21,10 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var d = new Date();
 d.setSeconds(15);
 var maxElapsedUnits = d.getSeconds();
-var fname = "Boi";
+var username;
+var shoeBrand;
+var shoeType;
+var shoeColor;
 
 function checkBalance(conversationResponse, callback) {
   //middleware.after function must pass a complete Watson respose to callback
@@ -58,10 +61,13 @@ module.exports = function(app) {
     console.log('Twilio bot is live');
   }
 
-  /*storage.users.get('11111', function(error, beans){
-    fname = beans.firstname;
-  });*/
-
+  storage.channels.get('1772861762745413', function(error, beans){
+    username = beans.user_name;
+    shoeBrand = beans.shoe_brand;
+    shoeType = beans.shoe_type;
+    shoeColor = beans.shoe_color;
+  });
+ 
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     //console.log("First Name: " + JSON.stringify(fname));
@@ -110,6 +116,11 @@ module.exports = function(app) {
     var lastActivityTime = new Date();
     console.log("Date: " + JSON.stringify(lastActivityTime));
 
+    console.log("user_name: " + username);
+    console.log("shoe_brand: " + shoe_brand);
+    console.log("shoe_type: " + shoeType);
+    console.log("shoe_color: " + shoeColor);
+    
     storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
       if(err){
         console.log("Warning: error saving channel details: " + JSON.stringify(err));

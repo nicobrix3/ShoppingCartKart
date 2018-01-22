@@ -60,7 +60,7 @@ var processWatsonResponse = function(bot, message){
   if(endedCondition == false) {
     if(typeof message.watsonData.output !== 'undefined') {
       //send please wait to user
-      console.log("Message: " + JSON.stringify(message));
+      //console.log("Message: " + JSON.stringify(message));
       bot.reply(message, message.watsonData.output.text.join('\n'));
     }
   }

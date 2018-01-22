@@ -62,10 +62,10 @@ module.exports = function(app) {
   }
 
   storage.channels.get('1772861762745413', function(error, beans){
-    username = beans.user_name;
-    shoeBrand = beans.shoe_brand;
-    shoeType = beans.shoe_type;
-    shoeColor = beans.shoe_color;
+    username = beans.contextVar.user_name;
+    shoeBrand = beans.contextVar.shoe_brand;
+    shoeType = beans.contextVar.shoe_type;
+    shoeColor = beans.contextVar.shoe_color;
   });
  
   // Customize your Watson Middleware object's before and after callbacks.
@@ -84,7 +84,7 @@ module.exports = function(app) {
         }
 
         console.log("Successfully retrieved conversation history...");
-
+        
         if(data && data.date) {
           var lastActivityDate = new Date(data.date);
           var now = new Date();

@@ -68,6 +68,16 @@ module.exports = function(app) {
     shoeColor = beans.contextVar.shoe_color;
   });
  
+  /*console.log("user_name: " + JSON.stringify(username));
+  console.log("shoe_brand: " + JSON.stringify(shoe_brand));
+  console.log("shoe_type: " + JSON.stringify(shoeType));
+  console.log("shoe_color: " + JSON.stringify(shoeColor));*/
+
+  console.log("user_name: " + username);
+  console.log("shoe_brand: " + shoeBrand);
+  console.log("shoe_type: " + shoeType);
+  console.log("shoe_color: " + shoeColor);
+
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     //console.log("First Name: " + JSON.stringify(fname));
@@ -84,7 +94,7 @@ module.exports = function(app) {
         }
 
         console.log("Successfully retrieved conversation history...");
-        
+
         if(data && data.date) {
           var lastActivityDate = new Date(data.date);
           var now = new Date();
@@ -115,11 +125,6 @@ module.exports = function(app) {
 
     var lastActivityTime = new Date();
     console.log("Date: " + JSON.stringify(lastActivityTime));
-    console.log("user_name: " + JSON.stringify(username));
-    console.log("shoe_brand: " + JSON.stringify(shoe_brand));
-    console.log("shoe_type: " + JSON.stringify(shoeType));
-    console.log("shoe_color: " + JSON.stringify(shoeColor));
-
     storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
       if(err){
         console.log("Warning: error saving channel details: " + JSON.stringify(err));

@@ -89,8 +89,7 @@ module.exports = function(app) {
             console.log("Should end the conversation.");
             //end the conversation.
             Facebook.endConversation(message);
-            //conversation ended
-          } else{
+          } else {
             console.log("Continue conversation");
           }
         }

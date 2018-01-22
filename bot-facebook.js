@@ -41,7 +41,8 @@ function endConversation(message){
   var endMessage = clone(message);
   endMessage.text = 'time out';
   middleware.interpret(bot, endMessage, function(){
-    processWatsonResponse(bot, endMessage);
+    //processWatsonResponse(bot, endMessage);
+    bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
   });
 }
 

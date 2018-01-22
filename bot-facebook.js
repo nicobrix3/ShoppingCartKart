@@ -41,6 +41,7 @@ var middleware = require('botkit-middleware-watson')({
 function endConversation(message){
   console.log("Trying to end conversation");
   endedCondition = true;
+  console.log("End Condition: " + endedCondition);
   var endMessage = clone(message);
   endMessage.text = 'time out';
   middleware.interpret(bot, endMessage, function(){

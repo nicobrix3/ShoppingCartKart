@@ -54,7 +54,7 @@ var processWatsonResponse = function(bot, message){
     if(typeof message.watsonData.output !== 'undefined') {
       //send please wait to user
       console.log("Message: " + JSON.stringify(message));
-      bot.reply(message, message.watsonData.output.text.join('\n'));
+      //bot.reply(message, message.watsonData.output.text.join('\n'));
 
       if(message.watsonData.output.action === 'check_balance'){
         var newMessage = clone(message);

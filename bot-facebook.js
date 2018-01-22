@@ -21,6 +21,7 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var d = new Date();
 d.setSeconds(5);
 var maxElapsedUnits = d.getSeconds();
+var endedCondition = false;
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
@@ -39,6 +40,7 @@ var middleware = require('botkit-middleware-watson')({
 
 function endConversation(message){
   console.log("Trying to end conversation");
+  endedCondition = true;
   var endMessage = clone(message);
   endMessage.text = 'time out';
   middleware.interpret(bot, endMessage, function(){
@@ -54,11 +56,13 @@ var processWatsonResponse = function(bot, message){
     console.log("Watson Error: " + JSON.stringify(message.watsonError));
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
+  if(endedCondition == true) {
     if(typeof message.watsonData.output !== 'undefined') {
       //send please wait to user
       console.log("Message: " + JSON.stringify(message));
       bot.reply(message, message.watsonData.output.text.join('\n'));
-
+    }
+  }
       if(message.watsonData.output.action === 'check_balance'){
         var newMessage = clone(message);
         newMessage.text = 'check the name';
@@ -68,17 +72,13 @@ var processWatsonResponse = function(bot, message){
           bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
         });
       }
-    }
-  //}
+  endedCondition = false;
 };
 
 /*controller.hears('(.*)', 'message_received', function(bot, message) {
   bot.reply(message, message.watsonData.output.text.join('\n'));
 });*/
 
-controller.hears('timeout', 'message_received', middleware.hear, function(bot, message){
-  console.log("TIMEOUT HEARD! DETECTED TIMEOUT!");
-});
 controller.on('message_received', processWatsonResponse);
 
 module.exports.controller = controller;

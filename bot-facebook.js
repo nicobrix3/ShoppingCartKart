@@ -65,7 +65,7 @@ function displayShoe(recipientId){
           text: "Link to Facebook",
           buttons:[{
             type: "web_url",
-            url: "https://developers.facebook.com/docs/messenger-platform/reference/buttons/url#example_body"
+            "url": "https://developers.facebook.com/docs/messenger-platform/reference/buttons/url#example_body"
           }]
         }
       }

@@ -148,7 +148,7 @@ module.exports = function(app) {
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'save_full_record'){
         console.log("Retrieveing context data for SAVE FULL RECORD");
-        Facebook.displayShoe(message.channel);
+        //Facebook.displayShoe(message.channel);
         /*storage.channels.get(message.channel, function(error, beans){
           username = beans.contextVar.user_name;
           shoeBrand = beans.contextVar.shoe_brand;

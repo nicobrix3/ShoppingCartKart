@@ -137,7 +137,7 @@ module.exports = function(app) {
 
     var lastActivityTime = new Date();
     console.log("Date: " + JSON.stringify(lastActivityTime));
-    storage.channels.save({id: message.channel, date: lastActivityTime}, function(err) {
+    storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
       if(err){
         console.log("Warning: error saving channel details: " + JSON.stringify(err));
       }
@@ -147,14 +147,7 @@ module.exports = function(app) {
     });
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'save_full_record'){
-        storage.channels.save({id: message.channel, contextVar: conversationResponse.context}, function(err) {
-          if(err){
-            console.log("Warning: error saving channel details: " + JSON.stringify(err));
-          }
-          else{
-            console.log("Success saving channel detail.");
-          }
-        });
+        console.log("Retrieveing context data for SAVE FULL RECORD");
         /*storage.channels.get(message.channel, function(error, beans){
           username = beans.contextVar.user_name;
           shoeBrand = beans.contextVar.shoe_brand;

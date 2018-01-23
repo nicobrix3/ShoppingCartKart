@@ -155,7 +155,7 @@ module.exports = function(app) {
             console.log("Success saving channel detail.");
           }
         });
-        storage.channels.get(message.channel, function(error, beans){
+        /*storage.channels.get(message.channel, function(error, beans){
           username = beans.contextVar.user_name;
           shoeBrand = beans.contextVar.shoe_brand;
           shoeType = beans.contextVar.shoe_type;
@@ -164,11 +164,11 @@ module.exports = function(app) {
         console.log("user_name: " + username);
         console.log("shoe_brand: " + shoeBrand);
         console.log("shoe_type: " + shoeType);
-        console.log("shoe_color: " + shoeColor);
+        console.log("shoe_color: " + shoeColor);*/
       }
     }
 
-    /*storage.channels.get(message.channel, function(error, beans){
+    storage.channels.get(message.channel, function(error, beans){
       username = beans.contextVar.user_name;
       shoeBrand = beans.contextVar.shoe_brand;
       shoeType = beans.contextVar.shoe_type;
@@ -178,7 +178,7 @@ module.exports = function(app) {
     console.log("user_name: " + username);
     console.log("shoe_brand: " + shoeBrand);
     console.log("shoe_type: " + shoeType);
-    console.log("shoe_color: " + shoeColor);*/
+    console.log("shoe_color: " + shoeColor);
 
     callback(null, conversationResponse);
   };

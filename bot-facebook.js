@@ -51,6 +51,29 @@ function endConversation(message){
   console.log("Conversation ended");
 }
 
+function displayShoe(recipientId){
+  console.log("Trying to display shoe");
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Link to Facebook",
+          buttons:[{
+            type: "web_url",
+            url: "https://developers.facebook.com/docs/messenger-platform/reference/buttons/url#example_body"
+          }]
+        }
+      }
+    }
+  };
+  bot.reply(messageData);
+}
+
 var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
   if(message.watsonError){
@@ -85,3 +108,4 @@ controller.on('message_received', processWatsonResponse);
 module.exports.controller = controller;
 module.exports.bot = bot;
 module.exports.endConversation = endConversation;
+module.exports.displayShoe = displayShoe;

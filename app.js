@@ -132,11 +132,11 @@ module.exports = function(app) {
     console.log("shoe_brand: " + shoeBrand);
     console.log("shoe_type: " + shoeType);
     console.log("shoe_color: " + shoeColor);*/
-    messenger.sendButtonsMessage(message.channel, 'Yow', [
+    messenger.sendButtonsMessage(message.channel, [
       {
         "url": "https://kariteun-shopping.mybluemix.net/",
         "type": "web_url",
-        "title": "Open Website",
+        "title": "Kariteun Website",
       }
     ]);
     callback(null, conversationResponse);

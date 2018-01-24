@@ -52,26 +52,7 @@ function endConversation(message){
 }
 
 function displayShoe(recipientId){
-  console.log("Trying to display shoe");
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "button",
-          text: "Link to Facebook",
-          buttons:[{
-            type: "web_url",
-            "url": "https://developers.facebook.com/docs/messenger-platform/reference/buttons/url#example_body"
-          }]
-        }
-      }
-    }
-  };
-  bot.reply(messageData);
+  
 }
 
 var processWatsonResponse = function(bot, message){

@@ -18,6 +18,8 @@ require('dotenv').load();
 var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 //var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
+var FBMessenger = require('fb-messenger');
+var messenger = new FBMessenger(process.env.FB_ACCESS_TOKEN);
 var d = new Date();
 d.setSeconds(15);
 var maxElapsedUnits = d.getSeconds();
@@ -61,43 +63,11 @@ module.exports = function(app) {
     console.log('Twilio bot is live');
   }
 
-  /*storage.channels.get('1772861762745413', function(error, beans){
-    username = beans.contextVar.user_name;
-    shoeBrand = beans.contextVar.shoe_brand;
-    shoeType = beans.contextVar.shoe_type;
-    shoeColor = beans.contextVar.shoe_color;
-  });
- 
-  console.log("user_name: " + JSON.stringify(username));
-  console.log("shoe_brand: " + JSON.stringify(shoeBrand));
-  console.log("shoe_type: " + JSON.stringify(shoeType));
-  console.log("shoe_color: " + JSON.stringify(shoeColor));*/
-
-  /*console.log("user_name: " + username);
-  console.log("shoe_brand: " + shoeBrand);
-  console.log("shoe_type: " + shoeType);
-  console.log("shoe_color: " + shoeColor);*/
-
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
-    //console.log("First Name: " + JSON.stringify(fname));
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
-
-    /*storage.channels.get(message.channel, function(error, beans){
-      username = beans.contextVar.user_name;
-      shoeBrand = beans.contextVar.shoe_brand;
-      shoeType = beans.contextVar.shoe_type;
-      shoeColor = beans.contextVar.shoe_color;
-    });
-
-    console.log("user_name: " + username);
-    console.log("shoe_brand: " + shoeBrand);
-    console.log("shoe_type: " + shoeType);
-    console.log("shoe_color: " + shoeColor);*/
     
     storage.channels.get(message.channel, function(err,data){
-      //console.log(JSON.stringify(message.channel));
-      //console.log("data: " + JSON.stringify(data));
       if(err){
         console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
       } else {
@@ -112,10 +82,9 @@ module.exports = function(app) {
           var now = new Date();
           var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
           console.log("Seconds Elapsed: " + secondsElapsed);
-          //console.log("Max Elapsed Units (Timelimit): " + maxElapsedUnits);
           if(secondsElapsed > maxElapsedUnits) {
+            //end conversation
             console.log("Should end the conversation.");
-            //end the conversation.
             Facebook.endConversation(message);
           } else {
             console.log("Continue conversation");
@@ -149,20 +118,10 @@ module.exports = function(app) {
       if(conversationResponse.output.action === 'save_full_record'){
         console.log("Retrieveing context data for SAVE FULL RECORD");
         //Facebook.displayShoe(message.channel);
-        /*storage.channels.get(message.channel, function(error, beans){
-          username = beans.contextVar.user_name;
-          shoeBrand = beans.contextVar.shoe_brand;
-          shoeType = beans.contextVar.shoe_type;
-          shoeColor = beans.contextVar.shoe_color;
-        });
-        console.log("user_name: " + username);
-        console.log("shoe_brand: " + shoeBrand);
-        console.log("shoe_type: " + shoeType);
-        console.log("shoe_color: " + shoeColor);*/
       }
     }
-
-    storage.channels.get(message.channel, function(error, beans){
+    //print the context variables gathered
+    /*storage.channels.get(message.channel, function(error, beans){
       username = beans.contextVar.user_name;
       shoeBrand = beans.contextVar.shoe_brand;
       shoeType = beans.contextVar.shoe_type;
@@ -172,8 +131,14 @@ module.exports = function(app) {
     console.log("user_name: " + username);
     console.log("shoe_brand: " + shoeBrand);
     console.log("shoe_type: " + shoeType);
-    console.log("shoe_color: " + shoeColor);
-
+    console.log("shoe_color: " + shoeColor);*/
+    messenger.sendButtonsMessage(message.channel, 'Yow', [
+      {
+        "url": "https://kariteun-shopping.mybluemix.net/",
+        "type": "web_url",
+        "title": "Open Website",
+      }
+    ]);
     callback(null, conversationResponse);
   };
 };//comment

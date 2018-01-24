@@ -52,7 +52,12 @@ function endConversation(message){
 }
 
 function displayShoe(recipientId){
-  
+  /*console.log("Trying to display webview");
+  var displayMessage = clone(message);
+  displayMessage.attachment.type = 'template';
+  displayMessage.attahcment.payload.template_type = 'button';
+  displayMessage.attahcment.payload.buttons = ''
+*/
 }
 
 var processWatsonResponse = function(bot, message){

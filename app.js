@@ -134,10 +134,11 @@ module.exports = function(app) {
     console.log("shoe_color: " + shoeColor);*/
     var FBMessenger = require('fb-messenger');
     var messenger = new FBMessenger(process.env.FB_ACCESS_TOKEN);
-    messenger.sendButtonsMessage(message.channel, 'Kariteun Website',[
+    messenger.sendButtonsMessage(message.channel, 'Click the link',[
       {
         "type": "web_url",
-        "url": "https://kariteun-shopping.mybluemix.net/"
+        "url": "https://kariteun-shopping.mybluemix.net/",
+        "title": "Kariteun Website"
       }
     ]);
     callback(null, conversationResponse);

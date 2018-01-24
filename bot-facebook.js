@@ -56,8 +56,14 @@ function displayShoe(recipientId){
   var displayMessage = clone(message);
   displayMessage.attachment.type = 'template';
   displayMessage.attahcment.payload.template_type = 'button';
-  displayMessage.attahcment.payload.buttons = ''
-*/
+  displayMessage.attahcment.payload.text = 'Welcome. Link your account.';
+  displayMessage.attahcment.payload.buttons.type = 'web_url';
+  displayMessage.attahcment.payload.buttons.url = 'https://kariteun-shopping.mybluemix.net/';
+  displayMessage.attahcment.payload.buttons.title = 'Kariteun';
+  middleware.interpret(bot, displayMessage, function(){
+    bot.reply(displayMessage);
+  });
+  console.log("Webview Displayed");*/
 }
 
 var processWatsonResponse = function(bot, message){

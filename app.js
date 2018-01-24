@@ -138,7 +138,8 @@ module.exports = function(app) {
       {
         "type": "web_url",
         "url": "https://kariteun-shopping.mybluemix.net/",
-        "title": "Kariteun Website"
+        "title": "Kariteun Website",
+        "webview_height_ratio": "full"
       }
     ]);
     callback(null, conversationResponse);

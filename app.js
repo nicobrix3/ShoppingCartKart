@@ -132,16 +132,16 @@ module.exports = function(app) {
     console.log("shoe_brand: " + shoeBrand);
     console.log("shoe_type: " + shoeType);
     console.log("shoe_color: " + shoeColor);*/
-    var FBMessenger = require('fb-messenger');
-    var messenger = new FBMessenger(process.env.FB_ACCESS_TOKEN);
+    
     messenger.sendButtonsMessage(message.channel, 'Click the link',[
       {
         "type": "web_url",
         "url": "https://kariteun-shopping.mybluemix.net/",
         "title": "Kariteun Website",
-        "webview_height_ratio": "full"
+        "messenger_extensions": true,
+        "webview_height_ratio": "tall"
       }
     ]);
     callback(null, conversationResponse);
   };
-};//comment
+};

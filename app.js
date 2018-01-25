@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+var express = require('express'),
+http = require('http'),
+path = require('path');
+
+var app = express();
 require('dotenv').load();
 app.use('/images', express.static(path.join(__dirname, 'images')));
 var clone = require('clone');
@@ -82,6 +87,7 @@ module.exports = function(app) {
           var lastActivityDate = new Date(data.date);
           var now = new Date();
           var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
+          console.log("Max Elapsed Units: " + maxElapsedUnits);
           console.log("Seconds Elapsed: " + secondsElapsed);
           if(secondsElapsed > maxElapsedUnits) {
             //end conversation

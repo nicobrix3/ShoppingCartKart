@@ -108,4 +108,3 @@ controller.on('message_received', processWatsonResponse);
 module.exports.controller = controller;
 module.exports.bot = bot;
 module.exports.endConversation = endConversation;
-module.exports.displayShoe = displayShoe;

@@ -55,6 +55,7 @@ var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
   if(message.watsonError){
     console.log("Watson Error: " + JSON.stringify(message.watsonError));
+    console.log(message.watsonError);
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
   }
   if(endedCondition == false) {

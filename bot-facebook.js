@@ -79,18 +79,19 @@ var processWatsonResponse = function(bot, message){
       bot.reply(message, message.watsonData.output.text.join('\n'));
     }
   }
-      if(message.watsonData.output.action === 'check_balance'){
+  if(message.watsonData.output.action === 'check_balance'){
         var newMessage = clone(message);
         newMessage.text = 'check the name';
         //send to Watson
         middleware.interpret(bot, newMessage, function(){
           //send results to user
           bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
-        });
-      }
+    });
+  }
   if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
+      console.log("Generic template.");
       setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
-      
+
       setTimeout(function(){
         var attachment = {
         "type":"template",
@@ -99,7 +100,6 @@ var processWatsonResponse = function(bot, message){
           "elements":[
              {
               "title":message.watsonData.output.action.generic_template.title,
-              "image_url":message.watsonData.output.action.generic_template.image,
               "buttons":message.watsonData.output.action.generic_template.buttons
             }
           ]

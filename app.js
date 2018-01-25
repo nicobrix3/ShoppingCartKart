@@ -15,7 +15,7 @@
  */
 
 var express = require('express'),
-http = require('http'),
+https = require('https'),
 path = require('path');
 
 var app = express();
@@ -108,7 +108,7 @@ module.exports = function(app) {
     });
 
     function getFBusername(path, callback) {
-      return http.get({
+      return https.get({
           encoding: "utf8",
           host: 'graph.facebook.com',
           path: path

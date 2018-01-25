@@ -101,6 +101,11 @@ module.exports = function(app) {
       }
     });
 
+    var path =  "/v2.0/"+message.user+"/?access_token=" + process.env.FB_ACCESS_TOKEN;
+    getFBusername(path, function(firstname){
+      console.log("FB firstname "+ firstname +"\n");
+    });
+
     callback(null, conversationPayload);
   };
 
@@ -152,3 +157,24 @@ module.exports = function(app) {
     callback(null, conversationResponse);
   };
 };
+
+function getFBusername(path, callback) {
+  return https.get({
+      encoding: "utf8",
+      host: 'graph.facebook.com',
+      path: path
+  }, function(response) {
+      // Continuously update stream with data
+      var body = '';
+      response.on('data', function(d) {
+          body += d;
+      });
+      response.on('end', function() {
+          // Data reception is done, do whatever with it!
+          var parsed = JSON.parse(body);
+          console.log("Parsed: " + JSON.stringify(parsed));
+          var firstname = parsed.first_name;
+          callback(firstname);
+      });
+  });
+}

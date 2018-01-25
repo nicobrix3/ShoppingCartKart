@@ -30,7 +30,7 @@ var d = new Date();
 d.setSeconds(99);
 var maxElapsedUnits = d.getSeconds();
 console.log("Declared maxElapsedUnits: " + maxElapsedUnits);
-var username;
+var userName;
 var shoeBrand;
 var shoeType;
 var shoeColor;
@@ -105,7 +105,8 @@ module.exports = function(app) {
     console.log("PATH: " + path);
     getFBusername(path, function(firstname){
       console.log("FB firstname "+ firstname +"\n");
-      var userName = firstname;
+      userName = firstname;
+      console.log("User Name in getFBusername: " + userName);
     });
 
     function getFBusername(path, callback) {

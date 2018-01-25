@@ -21,7 +21,7 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var FBMessenger = require('fb-messenger');
 var messenger = new FBMessenger(process.env.FB_ACCESS_TOKEN);
 var d = new Date();
-d.setSeconds(15);
+d.setSeconds(180);
 var maxElapsedUnits = d.getSeconds();
 var username;
 var shoeBrand;

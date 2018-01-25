@@ -100,6 +100,7 @@ var processWatsonResponse = function(bot, message){
           "elements":[
              {
               "title":message.watsonData.output.action.generic_template.title,
+              "image_url":message.watsonData.output.action.generic_template.image,
               "buttons":message.watsonData.output.action.generic_template.buttons
             }
           ]

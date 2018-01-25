@@ -88,6 +88,29 @@ var processWatsonResponse = function(bot, message){
           bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
         });
       }
+  if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
+      setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+      
+      setTimeout(function(){
+        var attachment = {
+        "type":"template",
+        "payload":{
+          "template_type":"generic",
+          "elements":[
+             {
+              "title":message.watsonData.output.action.generic_template.title,
+              "image_url":message.watsonData.output.action.generic_template.image,
+              "buttons":message.watsonData.output.action.generic_template.buttons
+            }
+          ]
+        }
+      }
+    });
+   
+        bot.reply(message, {
+            attachment: attachment,
+        });
+  }
   endedCondition = false;
 };
 

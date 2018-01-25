@@ -35,12 +35,12 @@ var shoeBrand;
 var shoeType;
 var shoeColor;
 
-/*function checkBalance(conversationResponse, callback) {
+function checkBalance(conversationResponse, callback) {
   //middleware.after function must pass a complete Watson respose to callback
   //conversationResponse.context.user_name = 'Henrietta';
   conversationResponse.context.user_name = userName;
   callback(null, conversationResponse);
-}*/
+}
 
 var middleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
@@ -106,14 +106,8 @@ module.exports = function(app) {
     getFBusername(path, function(firstname){
       console.log("FB firstname "+ firstname +"\n");
       var userName = firstname;
+      conversationPayload.context.user_name = firstname;
     });
-
-    function checkBalance(conversationResponse, callback) {
-      //middleware.after function must pass a complete Watson respose to callback
-      //conversationResponse.context.user_name = 'Henrietta';
-      conversationResponse.context.user_name = userName;
-      callback(null, conversationResponse);
-    }
 
     function getFBusername(path, callback) {
       return https.get({

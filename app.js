@@ -15,6 +15,7 @@
  */
 
 require('dotenv').load();
+app.use('/images', express.static(path.join(__dirname, 'images')));
 var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 //var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
@@ -117,7 +118,6 @@ module.exports = function(app) {
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'save_full_record'){
         console.log("Retrieveing context data for SAVE FULL RECORD");
-        //Facebook.displayShoe(message.channel);
       }
     }
     //print the context variables gathered

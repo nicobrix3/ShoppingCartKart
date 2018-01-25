@@ -139,7 +139,7 @@ module.exports = function(app) {
         "url": "https://kariteun-shopping.mybluemix.net/",
         "title": "Kariteun Website",
         "messenger_extensions": true,
-        "webview_height_ratio": "tall"
+        "webview_height_ratio": "full"
       }
     ]);
     callback(null, conversationResponse);

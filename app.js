@@ -101,10 +101,10 @@ module.exports = function(app) {
       }
     });
 
-    var path =  "/v2.0/"+message.channel+"/?access_token=" + process.env.FB_ACCESS_TOKEN;
-    getFBusername(path, function(firstname){
+    var path = "/v2.0/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
+    /*getFBusername(path, function(firstname){
       console.log("FB firstname "+ firstname +"\n");
-    });
+    });*/
 
     callback(null, conversationPayload);
   };

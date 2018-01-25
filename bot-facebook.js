@@ -90,7 +90,7 @@ var processWatsonResponse = function(bot, message){
   }
   if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
       console.log("Generic template.");
-      setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
 
       setTimeout(function(){
         var attachment = {

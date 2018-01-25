@@ -106,7 +106,6 @@ module.exports = function(app) {
     getFBusername(path, function(firstname){
       console.log("FB firstname "+ firstname +"\n");
       var userName = firstname;
-      conversationPayload.context.user_name = firstname;
     });
 
     function getFBusername(path, callback) {

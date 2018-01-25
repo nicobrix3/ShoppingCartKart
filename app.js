@@ -108,7 +108,7 @@ module.exports = function(app) {
     });
 
     function getFBusername(path, callback) {
-      return https.get({
+      return http.get({
           encoding: "utf8",
           host: 'graph.facebook.com',
           path: path

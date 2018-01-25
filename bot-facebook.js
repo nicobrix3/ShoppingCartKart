@@ -105,11 +105,10 @@ var processWatsonResponse = function(bot, message){
           ]
         }
       }
-    });
-   
         bot.reply(message, {
             attachment: attachment,
         });
+    });
   }
   endedCondition = false;
 };

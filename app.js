@@ -108,9 +108,6 @@ module.exports = function(app) {
       userName = firstname;
       console.log("User Name in getFBusername: " + userName);
     });
-    
-    checkName(conversationPayload, null);
-
     storage.channels.get(message.channel, function(err,data){
       if(err){
         console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));

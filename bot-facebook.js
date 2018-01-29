@@ -137,6 +137,7 @@ var processWatsonResponse = function(bot, message){
             "template_type":"button",
             "elements":[
               {
+                "title":message.watsonData.output.action.display_yes_no.buttons,
                 "buttons":message.watsonData.output.action.display_yes_no.buttons
               }
             ]

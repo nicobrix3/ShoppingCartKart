@@ -24,10 +24,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 //var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
-var FBMessenger = require('fb-messenger');
-var messenger = new FBMessenger(process.env.FB_ACCESS_TOKEN);
-var d = new Date();
-d.setMinutes(30);
 var maxElapsedUnits = 3000;
 console.log("Declared maxElapsedUnits: " + maxElapsedUnits + " seconds");
 var userName;
@@ -122,7 +118,6 @@ module.exports = function(app) {
           var lastActivityDate = new Date(data.date);
           var now = new Date();
           var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
-
           console.log("Max Elapsed Units: " + maxElapsedUnits);
           console.log("Seconds Elapsed: " + secondsElapsed);
           if(secondsElapsed > maxElapsedUnits) {

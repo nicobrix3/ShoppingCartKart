@@ -52,7 +52,7 @@ var processWatsonResponse = function(bot, message){
       bot.reply(message, message.watsonData.output.text.join('\n'));
     }
   }
-  if(message.watsonData.output.action === 'check_balance'){
+  /*if(message.watsonData.output.action === 'check_balance'){
         var newMessage = clone(message);
         newMessage.text = 'check the name';
         //send to Watson
@@ -60,7 +60,7 @@ var processWatsonResponse = function(bot, message){
           //send results to user
           bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
     });
-  }
+  }*/
   if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
       console.log("Generic template.");
       //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
@@ -99,11 +99,11 @@ function endConversation(message){
   console.log("Conversation ended");
 }
 
-controller.hears('(.*)', 'message_received', function(bot, message) {
+/*controller.hears('(.*)', 'message_received', function(bot, message) {
   bot.reply(message, message.watsonData.output.text.join('\n'));
-});
+});*/
 
-//controller.on('message_received', processWatsonResponse);
+controller.on('message_received', processWatsonResponse);
 
 module.exports.controller = controller;
 module.exports.bot = bot;

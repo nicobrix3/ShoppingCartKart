@@ -91,11 +91,15 @@ module.exports = function(app) {
     });
   }
 
-  function checkBalance(conversationResponse, callback) {
+  /*function checkBalance(conversationResponse, callback) {
     //middleware.after function must pass a complete Watson respose to callback
     //conversationResponse.context.user_name = 'Henrietta';
     conversationResponse.context.user_name = userName;
     callback(null, conversationResponse);
+  }*/
+  function checkName(conversationPayload, callback){
+    conversationPayload.context.user_name = userName;
+    callback(null, conversationPayload);
   }
 
   // Customize your Watson Middleware object's before and after callbacks.
@@ -110,6 +114,8 @@ module.exports = function(app) {
       console.log("User Name in getFBusername: " + userName);
     });
     
+    checkName(conversationPayload, null);
+
     storage.channels.get(message.channel, function(err,data){
       if(err){
         console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
@@ -141,11 +147,12 @@ module.exports = function(app) {
 
   middleware.after = function(message, conversationResponse, callback) {
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
-    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
+    //checkBalance(conversationResponse, callback);
+    /*if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'check_balance'){
         return checkBalance(conversationResponse, callback);
       }
-    }
+    }*/
 
     var lastActivityTime = new Date();
     console.log("Date: " + JSON.stringify(lastActivityTime));

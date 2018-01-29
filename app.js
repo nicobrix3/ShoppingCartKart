@@ -70,14 +70,6 @@ module.exports = function(app) {
     console.log('Twilio bot is live');
   }
 
-  var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
-  console.log("PATH: " + path);
-  getFBusername(path, function(firstname){
-    console.log("FB firstname "+ firstname +"\n");
-    userName = firstname;
-    console.log("User Name in getFBusername: " + userName);
-  });
-
   function getFBusername(path, callback) {
     return https.get({
         encoding: "utf8",
@@ -109,6 +101,14 @@ module.exports = function(app) {
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
+  
+    var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
+    console.log("PATH: " + path);
+    getFBusername(path, function(firstname){
+      console.log("FB firstname "+ firstname +"\n");
+      userName = firstname;
+      console.log("User Name in getFBusername: " + userName);
+    });
     
     storage.channels.get(message.channel, function(err,data){
       if(err){

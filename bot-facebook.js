@@ -21,7 +21,7 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var d = new Date();
 d.setSeconds(5);
 var maxElapsedUnits = d.getSeconds();
-var endedCondition = false;
+var endConvo = false;
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
@@ -38,60 +38,10 @@ var middleware = require('botkit-middleware-watson')({
   version_date: '2017-05-26'
 });
 
-var processWatsonResponse = function(bot, message){
-  console.log("Just heard the following message: " + JSON.stringify(message));
-  if(message.watsonError){
-    console.log("Watson Error: " + JSON.stringify(message.watsonError));
-    console.log(message.watsonError);
-    return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
-  }
-  if(endedCondition == false) {
-    if(typeof message.watsonData.output !== 'undefined') {
-      //send please wait to user
-      //console.log("Message: " + JSON.stringify(message));
-      bot.reply(message, message.watsonData.output.text.join('\n'));
-    }
-  }
-
-  if(message.watsonData.output.action === 'check_balance'){
-        var newMessage = clone(message);
-        newMessage.text = 'check new name';
-        //send to Watson
-        middleware.interpret(bot, newMessage, function(){
-          //send results to user
-          bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
-    });
-  }
-  
-  if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
-      console.log("Generic template.");
-      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
-      setTimeout(function(){
-        var attachment = {
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-             {
-              "title":message.watsonData.output.action.generic_template.title,
-              "image_url":message.watsonData.output.action.generic_template.image,
-              "buttons":message.watsonData.output.action.generic_template.buttons
-            }
-          ]
-        }
-      }
-      bot.reply(message, {
-        attachment: attachment,
-      });
-    });
-  }
-  endedCondition = false;
-};
-
 function endConversation(message){
   console.log("Trying to end conversation");
-  endedCondition = true;
-  console.log("End Condition: " + endedCondition);
+  endConvo = true;
+  console.log("End Condition: " + endConvo);
   var endMessage = clone(message);
   endMessage.text = 'time out';
   middleware.interpret(bot, endMessage, function(){
@@ -100,6 +50,56 @@ function endConversation(message){
   });
   console.log("Conversation ended");
 }
+
+var processWatsonResponse = function(bot, message){
+  console.log("Just heard the following message: " + JSON.stringify(message));
+  if(message.watsonError){
+    console.log("Watson Error: " + JSON.stringify(message.watsonError));
+    console.log(message.watsonError);
+    return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
+  }
+  if(endConvo == false) {
+    if(typeof message.watsonData.output !== 'undefined') {
+      //send please wait to user
+      //console.log("Message: " + JSON.stringify(message));
+      bot.reply(message, message.watsonData.output.text.join('\n'));
+    }
+
+    if(message.watsonData.output.action === 'check_balance'){
+          var newMessage = clone(message);
+          newMessage.text = 'check new name';
+          //send to Watson
+          middleware.interpret(bot, newMessage, function(){
+            //send results to user
+            bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
+      });
+    }
+
+    if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
+        console.log("Generic template.");
+        //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+        setTimeout(function(){
+          var attachment = {
+          "type":"template",
+          "payload":{
+            "template_type":"generic",
+            "elements":[
+              {
+                "title":message.watsonData.output.action.generic_template.title,
+                "image_url":message.watsonData.output.action.generic_template.image,
+                "buttons":message.watsonData.output.action.generic_template.buttons
+              }
+            ]
+          }
+        }
+        bot.reply(message, {
+          attachment: attachment,
+        });
+      });
+    }
+  }
+  endConvo = false;
+};
 
 /*controller.hears('(.*)', 'message_received', function(bot, message) {
   bot.reply(message, message.watsonData.output.text.join('\n'));

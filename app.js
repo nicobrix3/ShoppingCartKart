@@ -27,9 +27,9 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var FBMessenger = require('fb-messenger');
 var messenger = new FBMessenger(process.env.FB_ACCESS_TOKEN);
 var d = new Date();
-d.setSeconds(99);
-var maxElapsedUnits = d.getSeconds();
-console.log("Declared maxElapsedUnits: " + maxElapsedUnits);
+d.setMinutes(30);
+var maxElapsedUnits = 3000;
+console.log("Declared maxElapsedUnits: " + maxElapsedUnits + " seconds");
 var userName;
 var shoeBrand;
 var shoeType;
@@ -122,6 +122,7 @@ module.exports = function(app) {
           var lastActivityDate = new Date(data.date);
           var now = new Date();
           var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
+
           console.log("Max Elapsed Units: " + maxElapsedUnits);
           console.log("Seconds Elapsed: " + secondsElapsed);
           if(secondsElapsed > maxElapsedUnits) {

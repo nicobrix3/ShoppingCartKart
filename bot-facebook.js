@@ -103,25 +103,53 @@ var processWatsonResponse = function(bot, message){
       console.log("Shoe Brand Only.");
       //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
       setTimeout(function(){
-        var attachment = {
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":message.watsonData.output.action.shoe_brand_only.title,
-              "image_url":message.watsonData.output.action.shoe_brand_only.image,
-              "default_action": message.watsonData.output.action.shoe_brand_only.default_action,
-              "buttons":message.watsonData.output.action.shoe_brand_only.buttons
-            }
-          ]
-        }
-      }
-      bot.reply(message, {
-        attachment: attachment,
+        var attachment = 
+        {
+          "type":"template",
+          "payload":
+          {
+            "template_type":"generic",
+            "elements":[
+              {
+                "title":message.watsonData.output.action.shoe_brand_only.title,
+                "image_url":message.watsonData.output.action.shoe_brand_only.image,
+                "default_action": message.watsonData.output.action.shoe_brand_only.default_action,
+                "buttons":message.watsonData.output.action.shoe_brand_only.buttons
+              }
+            ]
+          }
+       }
+       bot.reply(message, {
+          attachment: attachment,
+       });
       });
-    });
-  }
+    }
+
+    if (message.watsonData.output.action && message.watsonData.output.action.display_yes_no) {
+      console.log("Shoe Brand Only.");
+      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+      setTimeout(function(){
+        var attachment = 
+        {
+          "type":"template",
+          "payload":
+          {
+            "template_type":"button",
+            "elements":[
+              {
+                "title":message.watsonData.output.action.display_yes_no.title,
+                "image_url":message.watsonData.output.action.display_yes_no.image,
+                "default_action": message.watsonData.output.action.display_yes_no.default_action,
+                "buttons":message.watsonData.output.action.display_yes_no.buttons
+              }
+            ]
+          }
+       }
+       bot.reply(message, {
+          attachment: attachment,
+       });
+      });
+    }
   }
   endConvo = false;
 };

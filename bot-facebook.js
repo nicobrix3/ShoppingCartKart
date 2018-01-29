@@ -38,19 +38,6 @@ var middleware = require('botkit-middleware-watson')({
   version_date: '2017-05-26'
 });
 
-function endConversation(message){
-  console.log("Trying to end conversation");
-  endedCondition = true;
-  console.log("End Condition: " + endedCondition);
-  var endMessage = clone(message);
-  endMessage.text = 'time out';
-  middleware.interpret(bot, endMessage, function(){
-    //processWatsonResponse(bot, endMessage);
-    bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
-  });
-  console.log("Conversation ended");
-}
-
 var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
   if(message.watsonError){
@@ -99,11 +86,24 @@ var processWatsonResponse = function(bot, message){
   endedCondition = false;
 };
 
-/*controller.hears('(.*)', 'message_received', function(bot, message) {
-  bot.reply(message, message.watsonData.output.text.join('\n'));
-});*/
+function endConversation(message){
+  console.log("Trying to end conversation");
+  endedCondition = true;
+  console.log("End Condition: " + endedCondition);
+  var endMessage = clone(message);
+  endMessage.text = 'time out';
+  middleware.interpret(bot, endMessage, function(){
+    //processWatsonResponse(bot, endMessage);
+    bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
+  });
+  console.log("Conversation ended");
+}
 
-controller.on('message_received', processWatsonResponse);
+controller.hears('(.*)', 'message_received', function(bot, message) {
+  bot.reply(message, message.watsonData.output.text.join('\n'));
+});
+
+//controller.on('message_received', processWatsonResponse);
 
 module.exports.controller = controller;
 module.exports.bot = bot;

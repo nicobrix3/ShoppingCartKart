@@ -140,12 +140,12 @@ module.exports = function(app) {
   };
 
   middleware.after = function(message, conversationResponse, callback) {
+    console.log("Inside After Method: " + JSON.stringify(conversationResponse));
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'check_balance'){
         return checkBalance(conversationResponse, callback);
       }
     }
-    console.log("Inside After Method: " + JSON.stringify(conversationResponse));
 
     var lastActivityTime = new Date();
     console.log("Date: " + JSON.stringify(lastActivityTime));
@@ -157,33 +157,12 @@ module.exports = function(app) {
         console.log("Success saving channel detail.");
       }
     });
+
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'save_full_record'){
         console.log("Retrieveing context data for SAVE FULL RECORD");
       }
     }
-    //print the context variables gathered
-    /*storage.channels.get(message.channel, function(error, beans){
-      username = beans.contextVar.user_name;
-      shoeBrand = beans.contextVar.shoe_brand;
-      shoeType = beans.contextVar.shoe_type;
-      shoeColor = beans.contextVar.shoe_color;
-    });
-
-    console.log("user_name: " + username);
-    console.log("shoe_brand: " + shoeBrand);
-    console.log("shoe_type: " + shoeType);
-    console.log("shoe_color: " + shoeColor);*/
-    
-    /*messenger.sendButtonsMessage(message.channel, 'Click the link',[
-      {
-        "type": "web_url",
-        "url": "https://kariteun-shopping.mybluemix.net/",
-        "title": "Kariteun Website",
-        "messenger_extensions": true,
-        "webview_height_ratio": "full"
-      }
-    ]);*/
     callback(null, conversationResponse);
   };
 };

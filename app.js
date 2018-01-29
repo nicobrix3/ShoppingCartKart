@@ -91,23 +91,18 @@ module.exports = function(app) {
     });
   }
 
-  /*function checkBalance(conversationResponse, callback) {
+  function checkBalance(conversationResponse, callback) {
     //middleware.after function must pass a complete Watson respose to callback
     //conversationResponse.context.user_name = 'Henrietta';
     conversationResponse.context.user_name = userName;
     callback(null, conversationResponse);
-  }*/
-  function checkName(conversationPayload, callback){
-    conversationPayload.context.user_name = userName;
-    callback(null, conversationPayload);
   }
-
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
   
     var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
-    console.log("PATH: " + path);
+    //console.log("PATH: " + path);
     getFBusername(path, function(firstname){
       console.log("FB firstname "+ firstname +"\n");
       userName = firstname;
@@ -147,12 +142,11 @@ module.exports = function(app) {
 
   middleware.after = function(message, conversationResponse, callback) {
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
-    //checkBalance(conversationResponse, callback);
-    /*if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
+    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'check_balance'){
         return checkBalance(conversationResponse, callback);
       }
-    }*/
+    }
 
     var lastActivityTime = new Date();
     console.log("Date: " + JSON.stringify(lastActivityTime));

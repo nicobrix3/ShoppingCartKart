@@ -52,15 +52,17 @@ var processWatsonResponse = function(bot, message){
       bot.reply(message, message.watsonData.output.text.join('\n'));
     }
   }
-  /*if(message.watsonData.output.action === 'check_balance'){
+
+  if(message.watsonData.output.action === 'check_balance'){
         var newMessage = clone(message);
-        newMessage.text = 'check the name';
+        newMessage.text = 'check new name';
         //send to Watson
         middleware.interpret(bot, newMessage, function(){
           //send results to user
           bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
     });
-  }*/
+  }
+  
   if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
       console.log("Generic template.");
       //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);

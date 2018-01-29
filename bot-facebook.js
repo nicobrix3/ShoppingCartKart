@@ -87,6 +87,7 @@ var processWatsonResponse = function(bot, message){
               {
                 "title":message.watsonData.output.action.generic_template.title,
                 "image_url":message.watsonData.output.action.generic_template.image,
+                "default_action": message.watsonData.output.action.generic_template.default_action,
                 "buttons":message.watsonData.output.action.generic_template.buttons
               }
             ]
@@ -97,6 +98,30 @@ var processWatsonResponse = function(bot, message){
         });
       });
     }
+
+    if (message.watsonData.output.action && message.watsonData.output.action.shoe_brand_only) {
+      console.log("Shoe Brand Only.");
+      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+      setTimeout(function(){
+        var attachment = {
+        "type":"template",
+        "payload":{
+          "template_type":"generic",
+          "elements":[
+            {
+              "title":message.watsonData.output.action.shoe_brand_only.title,
+              "image_url":message.watsonData.output.action.shoe_brand_only.image,
+              "default_action": message.watsonData.output.action.shoe_brand_only.default_action,
+              "buttons":message.watsonData.output.action.shoe_brand_only.buttons
+            }
+          ]
+        }
+      }
+      bot.reply(message, {
+        attachment: attachment,
+      });
+    });
+  }
   }
   endConvo = false;
 };

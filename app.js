@@ -70,6 +70,42 @@ module.exports = function(app) {
     console.log('Twilio bot is live');
   }
 
+  var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
+  console.log("PATH: " + path);
+  getFBusername(path, function(firstname){
+    console.log("FB firstname "+ firstname +"\n");
+    userName = firstname;
+    console.log("User Name in getFBusername: " + userName);
+  });
+
+  function getFBusername(path, callback) {
+    return https.get({
+        encoding: "utf8",
+        host: 'graph.facebook.com',
+        path: path
+    }, function(response) {
+        // Continuously update stream with data
+        var body = '';
+        response.on('data', function(d) {
+            body += d;
+        });
+        response.on('end', function() {
+            // Data reception is done, do whatever with it!
+            var parsed = JSON.parse(body);
+            console.log("Parsed: " + JSON.stringify(parsed));
+            var firstname = parsed.first_name;
+            callback(firstname);
+        });
+    });
+  }
+
+  function checkBalance(conversationResponse, callback) {
+    //middleware.after function must pass a complete Watson respose to callback
+    //conversationResponse.context.user_name = 'Henrietta';
+    conversationResponse.context.user_name = userName;
+    callback(null, conversationResponse);
+  }
+
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
@@ -100,45 +136,8 @@ module.exports = function(app) {
         }
       }
     });
-
-    var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
-    console.log("PATH: " + path);
-    getFBusername(path, function(firstname){
-      console.log("FB firstname "+ firstname +"\n");
-      userName = firstname;
-      console.log("User Name in getFBusername: " + userName);
-    });
-
-    function getFBusername(path, callback) {
-      return https.get({
-          encoding: "utf8",
-          host: 'graph.facebook.com',
-          path: path
-      }, function(response) {
-          // Continuously update stream with data
-          var body = '';
-          response.on('data', function(d) {
-              body += d;
-          });
-          response.on('end', function() {
-              // Data reception is done, do whatever with it!
-              var parsed = JSON.parse(body);
-              console.log("Parsed: " + JSON.stringify(parsed));
-              var firstname = parsed.first_name;
-              callback(firstname);
-          });
-      });
-    }
-
     callback(null, conversationPayload);
   };
-
-  function checkBalance(conversationResponse, callback) {
-    //middleware.after function must pass a complete Watson respose to callback
-    //conversationResponse.context.user_name = 'Henrietta';
-    conversationResponse.context.user_name = userName;
-    callback(null, conversationResponse);
-  }
 
   middleware.after = function(message, conversationResponse, callback) {
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){

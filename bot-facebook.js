@@ -156,6 +156,8 @@ var processWatsonResponse = function(bot, message){
   bot.reply(message, message.watsonData.output.text.join('\n'));
 });*/
 
+controller.on('message_received', processWatsonResponse);
+
 controller.on('facebook_postback', function(bot, message) {
   watsonMiddleware.readContext(message.user, function(err, context) {
     if (!context) {

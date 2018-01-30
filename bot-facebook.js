@@ -127,7 +127,7 @@ var processWatsonResponse = function(bot, message){
 
     if (message.watsonData.output.action && message.watsonData.output.action.display_yes_no) {
       console.log("Shoe Brand Only.");
-      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+     
       setTimeout(function(){
         var attachment = 
         {
@@ -147,6 +147,8 @@ var processWatsonResponse = function(bot, message){
           attachment: attachment,
        });
       });
+
+      setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
     }
   }
   endConvo = false;

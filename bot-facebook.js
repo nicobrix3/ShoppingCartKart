@@ -160,7 +160,7 @@ controller.on('message_received', processWatsonResponse);
 
 controller.on('facebook_postback', function(bot, message){
   console.log("Trying to respond to facebook postback");
-  bot.reply(message, message.payload);
+  bot.reply(message.payload);
 });
 
 module.exports.controller = controller;

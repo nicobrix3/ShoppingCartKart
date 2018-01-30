@@ -156,14 +156,30 @@ var processWatsonResponse = function(bot, message){
   bot.reply(message, message.watsonData.output.text.join('\n'));
 });*/
 
-controller.on('message_received', processWatsonResponse);
+controller.on('facebook_postback', function(bot, message) {
+  watsonMiddleware.readContext(message.user, function(err, context) {
+    if (!context) {
+      context = {};
+    }
+    //do something useful here
+    setContext(context.user_name, function(err, result) {
+      const newMessage = clone(message);
+      newMessage.text = 'No';
+
+      watsonMiddleware.sendToWatson(bot, newMessage, {postbackResult: 'success'}, function(err) {
+        if (err) {
+          newMessage.watsonError = error;
+        }
+        processWatsonResponse(bot, newMessage);
+      });
+    });
+  });
+});
 
 /*controller.on('facebook_postback', function(bot, message){
   console.log("Trying to respond to facebook postback");
   bot.reply(message, message.payload);
 });*/
-
-controller.on('facebook_postback', processWatsonResponse);
 
 module.exports.controller = controller;
 module.exports.bot = bot;

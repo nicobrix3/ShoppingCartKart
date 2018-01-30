@@ -137,7 +137,6 @@ var processWatsonResponse = function(bot, message){
             "template_type":"button",
             "elements":[
               {
-                "title":message.watsonData.output.action.display_yes_no.buttons,
                 "buttons":message.watsonData.output.action.display_yes_no.buttons
               }
             ]
@@ -147,8 +146,7 @@ var processWatsonResponse = function(bot, message){
           attachment: attachment,
        });
       });
-
-      setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
     }
   }
   endConvo = false;
@@ -159,6 +157,11 @@ var processWatsonResponse = function(bot, message){
 });*/
 
 controller.on('message_received', processWatsonResponse);
+
+controller.on('facebook_postback', function(bot, message){
+  console.log("Trying to respond to facebook postback");
+  bot.reply(message, 'please (' + message.payload + ')');
+});
 
 module.exports.controller = controller;
 module.exports.bot = bot;

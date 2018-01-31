@@ -27,6 +27,7 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var maxElapsedUnits = 3000;
 console.log("Declared maxElapsedUnits: " + maxElapsedUnits + " seconds");
 var userName;
+var fb_id;
 var shoeBrand;
 var shoeType;
 var shoeColor;
@@ -91,6 +92,7 @@ module.exports = function(app) {
     //middleware.after function must pass a complete Watson respose to callback
     //conversationResponse.context.user_name = 'Henrietta';
     conversationResponse.context.user_name = userName;
+    conversationResponse.context.fbid = fb_id;
     callback(null, conversationResponse);
   }
   // Customize your Watson Middleware object's before and after callbacks.
@@ -102,7 +104,9 @@ module.exports = function(app) {
     getFBusername(path, function(firstname){
       console.log("FB firstname "+ firstname +"\n");
       userName = firstname;
+      fb_id = message.user;
       console.log("User Name in getFBusername: " + userName);
+      console.log("FB id of user: " + fb_id);
     });
     storage.channels.get(message.channel, function(err,data){
       if(err){

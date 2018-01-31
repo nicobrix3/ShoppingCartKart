@@ -98,13 +98,12 @@ module.exports = function(app) {
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
-  
+    
     var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
     //console.log("PATH: " + path);
     getFBusername(path, function(firstname){
       console.log("FB firstname "+ firstname +"\n");
       userName = firstname;
-      fb_id = message.user;
       console.log("User Name in getFBusername: " + userName);
       console.log("FB id of user: " + fb_id);
     });
@@ -139,6 +138,7 @@ module.exports = function(app) {
 
   middleware.after = function(message, conversationResponse, callback) {
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
+    fb_id = message.user;
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'check_balance'){
         return checkBalance(conversationResponse, callback);

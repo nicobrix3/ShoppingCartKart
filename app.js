@@ -134,12 +134,12 @@ module.exports = function(app) {
     });
     var lastActivityTime = new Date();
     console.log("Date: " + JSON.stringify(lastActivityTime));
-    storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
+    storage.channels.save({id: message.channel, date: lastActivityTime}, function(err) {
       if(err){
         console.log("Warning: error saving channel details: " + JSON.stringify(err));
       }
       else{
-        console.log("Success saving channel detail.");
+        console.log("Success saving channel detail. Save Date");
       }
     });
     callback(null, conversationPayload);
@@ -165,6 +165,15 @@ module.exports = function(app) {
         console.log("Success saving channel detail.");
       }
     });*/
+  
+    storage.channels.save({id: message.channel, contextVar: conversationResponse.context}, function(err) {
+      if(err){
+        console.log("Warning: error saving channel details: " + JSON.stringify(err));
+      }
+      else{
+        console.log("Success saving channel detail. Save ContextVar");
+      }
+    });
 
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'save_full_record'){

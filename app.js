@@ -105,7 +105,6 @@ module.exports = function(app) {
       console.log("FB firstname "+ firstname +"\n");
       userName = firstname;
       console.log("User Name in getFBusername: " + userName);
-      console.log("FB id of user: " + fb_id);
     });
     storage.channels.get(message.channel, function(err,data){
       if(err){
@@ -139,6 +138,7 @@ module.exports = function(app) {
   middleware.after = function(message, conversationResponse, callback) {
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
     fb_id = message.user;
+    console.log("FB id of user: " + fb_id);
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'check_balance'){
         return checkBalance(conversationResponse, callback);

@@ -149,6 +149,33 @@ var processWatsonResponse = function(bot, message){
       });
       //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
     }
+
+    if (message.watsonData.output.action && message.watsonData.output.action.shoe_brand_and_type) {
+      console.log("Shoe Brand Only.");
+      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+      setTimeout(function(){
+        var attachment = 
+        {
+          "type":"template",
+          "payload":
+          {
+            "template_type":"generic",
+            "elements":[
+              {
+                "title":message.watsonData.output.action.shoe_brand_and_type.title,
+                "image_url":message.watsonData.output.action.shoe_brand_and_type.image,
+                "default_action": message.watsonData.output.action.shoe_brand_and_type.default_action,
+                "buttons":message.watsonData.output.action.shoe_brand_and_type.buttons
+              }
+            ]
+          }
+       }
+       bot.reply(message, {
+          attachment: attachment,
+       });
+      });
+    }
+
   }
   endConvo = false;
 };

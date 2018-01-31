@@ -92,7 +92,7 @@ module.exports = function(app) {
     //middleware.after function must pass a complete Watson respose to callback
     //conversationResponse.context.user_name = 'Henrietta';
     conversationResponse.context.user_name = userName;
-    //conversationResponse.context.fbid = fb_id;
+    conversationResponse.context.fbid = fb_id;
     callback(null, conversationResponse);
   }
   // Customize your Watson Middleware object's before and after callbacks.
@@ -137,8 +137,8 @@ module.exports = function(app) {
 
   middleware.after = function(message, conversationResponse, callback) {
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
-    //fb_id = message.user;
-    //console.log("FB id of user: " + fb_id);
+    fb_id = message.user;
+    console.log("FB id of user: " + fb_id);
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'check_balance'){
         return checkBalance(conversationResponse, callback);

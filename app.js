@@ -166,7 +166,9 @@ module.exports = function(app) {
       }
     });*/
   
-    storage.channels.save({id: message.channel, contextVar: conversationResponse.context}, function(err) {
+    var lastActivityTime = new Date();
+    console.log("Date: " + JSON.stringify(lastActivityTime));
+    storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
       if(err){
         console.log("Warning: error saving channel details: " + JSON.stringify(err));
       }

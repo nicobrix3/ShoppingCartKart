@@ -132,6 +132,16 @@ module.exports = function(app) {
         }
       }
     });
+    var lastActivityTime = new Date();
+    console.log("Date: " + JSON.stringify(lastActivityTime));
+    storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
+      if(err){
+        console.log("Warning: error saving channel details: " + JSON.stringify(err));
+      }
+      else{
+        console.log("Success saving channel detail.");
+      }
+    });
     callback(null, conversationPayload);
   };
 
@@ -145,7 +155,7 @@ module.exports = function(app) {
       }
     }
 
-    var lastActivityTime = new Date();
+    /*var lastActivityTime = new Date();
     console.log("Date: " + JSON.stringify(lastActivityTime));
     storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
       if(err){
@@ -154,7 +164,7 @@ module.exports = function(app) {
       else{
         console.log("Success saving channel detail.");
       }
-    });
+    });*/
 
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'save_full_record'){

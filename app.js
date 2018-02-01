@@ -27,6 +27,8 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var maxElapsedUnits = 3000;
 console.log("Declared maxElapsedUnits: " + maxElapsedUnits + " seconds");
 var userName;
+var userLastName;
+var userGender;
 var fb_id;
 var shoeBrand;
 var shoeType;
@@ -83,7 +85,9 @@ module.exports = function(app) {
             var parsed = JSON.parse(body);
             console.log("Parsed: " + JSON.stringify(parsed));
             var firstname = parsed.first_name;
-            callback(firstname);
+            var lastname = parsed.last_name;
+            var user_gender = parsed.gender;
+            callback(firstname, lastname, user_gender);
         });
     });
   }
@@ -93,6 +97,8 @@ module.exports = function(app) {
     //conversationResponse.context.user_name = 'Henrietta';
     conversationResponse.context.user_name = userName;
     conversationResponse.context.fbid = fb_id;
+    conversationResponse.context.user_lastname = userLastName;
+    conversationResponse.context.gender = userGender;
     callback(null, conversationResponse);
   }
   // Customize your Watson Middleware object's before and after callbacks.
@@ -100,10 +106,15 @@ module.exports = function(app) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
     var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
     //console.log("PATH: " + path);
-    getFBusername(path, function(firstname){
+    getFBusername(path, function(firstname, lastname, user_gender){
+      console.log("getFBusername");
       console.log("FB firstname "+ firstname +"\n");
       userName = firstname;
-      console.log("User Name in getFBusername: " + userName);
+      userLastName = lastname;
+      userGender = user_gender;
+      console.log("userName: " + userName);
+      console.log("userLastName: " + userLastName);
+      console.log("userGender: " + userGender);
     });
     storage.channels.get(message.channel, function(err,data){
       if(err){

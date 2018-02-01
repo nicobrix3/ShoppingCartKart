@@ -75,6 +75,32 @@ var processWatsonResponse = function(bot, message){
       });
     }
 
+    if (message.watsonData.output.action && message.watsonData.output.action.check_balance) {
+      console.log("Shoe Brand Only.");
+      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+      setTimeout(function(){
+        var attachment = 
+        {
+          "type":"template",
+          "payload":
+          {
+            "template_type":"generic",
+            "elements":[
+              {
+                "title":message.watsonData.output.action.check_balance.title,
+                "image_url":message.watsonData.output.action.check_balance.image,
+                "default_action": message.watsonData.output.action.check_balance.default_action,
+                "buttons":message.watsonData.output.action.check_balance.buttons
+              }
+            ]
+          }
+       }
+       bot.reply(message, {
+          attachment: attachment,
+       });
+      });
+    }
+
     if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
         console.log("Generic template.");
         //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);

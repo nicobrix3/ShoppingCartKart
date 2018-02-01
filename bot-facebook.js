@@ -74,7 +74,7 @@ var processWatsonResponse = function(bot, message){
             bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
       });
     }
-
+    /*
     if (message.watsonData.output.action && message.watsonData.output.action.check_balance) {
       console.log("Shoe Brand Only.");
       //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
@@ -100,7 +100,7 @@ var processWatsonResponse = function(bot, message){
        });
       });
     }
-
+    */
     if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
         console.log("Generic template.");
         //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);

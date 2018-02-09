@@ -65,15 +65,15 @@ var processWatsonResponse = function(bot, message){
       bot.reply(message, message.watsonData.output.text.join('\n'));
     }
 
-    /*if(message.watsonData.output.action === 'check_balance'){
+    if(message.watsonData.output.action === 'check_balance'){
           var newMessage = clone(message);
-          newMessage.text = 'check new name';
+          newMessage.text = 'hello';
           //send to Watson
           middleware.interpret(bot, newMessage, function(){
             //send results to user
             bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
       });
-    }*/
+    }
     /*
     if (message.watsonData.output.action && message.watsonData.output.action.check_balance) {
       console.log("Shoe Brand Only.");

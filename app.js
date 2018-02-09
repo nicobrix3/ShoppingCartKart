@@ -95,7 +95,7 @@ module.exports = function(app) {
   function checkBalance(conversationResponse, callback) {
     //middleware.after function must pass a complete Watson respose to callback
     //conversationResponse.context.user_name = 'Henrietta';
-    conversationResponse.context.user_name = userName;
+    conversationResponse.context.user_name = userName; // mao ni ang pag set sa context sa watson conversation
     conversationResponse.context.fbid = fb_id;
     conversationResponse.context.user_lastname = userLastName;
     conversationResponse.context.gender = userGender;

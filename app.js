@@ -23,7 +23,6 @@ require('dotenv').load();
 app.use('/images', express.static(path.join(__dirname, 'images')));
 var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
-//var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 var maxElapsedUnits = 3000;
 console.log("Declared maxElapsedUnits: " + maxElapsedUnits + " seconds");
 var userName;
@@ -33,13 +32,6 @@ var fb_id;
 var shoeBrand;
 var shoeType;
 var shoeColor;
-
-/*function checkBalance(conversationResponse, callback) {
-  //middleware.after function must pass a complete Watson respose to callback
-  //conversationResponse.context.user_name = 'Henrietta';
-  conversationResponse.context.user_name = userName;
-  callback(null, conversationResponse);
-}*/
 
 var middleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
@@ -94,8 +86,7 @@ module.exports = function(app) {
 
   function checkBalance(conversationResponse, callback) {
     //middleware.after function must pass a complete Watson respose to callback
-    //conversationResponse.context.user_name = 'Henrietta';
-    conversationResponse.context.user_name = userName; // mao ni ang pag set sa context sa watson conversation
+    conversationResponse.context.user_name = userName; // Set context variables in watson conversation
     conversationResponse.context.fbid = fb_id;
     conversationResponse.context.user_lastname = userLastName;
     conversationResponse.context.gender = userGender;
@@ -104,6 +95,7 @@ module.exports = function(app) {
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
+    var replyMessage = clone(message);
     var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
     //console.log("PATH: " + path);
     getFBusername(path, function(firstname, lastname, user_gender){
@@ -164,18 +156,6 @@ module.exports = function(app) {
         return checkBalance(conversationResponse, callback);
       }
     }
-
-    /*var lastActivityTime = new Date();
-    console.log("Date: " + JSON.stringify(lastActivityTime));
-    storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
-      if(err){
-        console.log("Warning: error saving channel details: " + JSON.stringify(err));
-      }
-      else{
-        console.log("Success saving channel detail.");
-      }
-    });*/
-  
     var lastActivityTime = new Date();
     console.log("Date: " + JSON.stringify(lastActivityTime));
     storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
@@ -186,12 +166,8 @@ module.exports = function(app) {
         console.log("Success saving channel detail. Save ContextVar");
       }
     });
-
-    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
-      if(conversationResponse.output.action === 'save_full_record'){
-        console.log("Retrieveing context data for SAVE FULL RECORD");
-      }
-    }
     callback(null, conversationResponse);
   };
 };
+
+module.exports.replyMessage = replyMessage;

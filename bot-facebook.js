@@ -15,6 +15,7 @@
  */
 
 var Botkit = require('botkit');
+var request = require('request');
 var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 //var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
@@ -45,6 +46,14 @@ function endConversation(message){
   var replyMessage = clone(message);
   var endMessage = clone(message);
   endMessage.text = 'time out';
+  //experiment start
+  request('https://kariteun-shopping.mybluemix.net/fblogout/1772861762745413', function (err, response, body) {
+    console.log("Processing reqeust");
+    console.log('error: ', err); // Handle the error if one occurred
+    console.log('statusCode: ', response && response.statusCode); // Check 200 or such
+    console.log('body ', body);
+  });
+  //experiment end
   middleware.interpret(bot, endMessage, function(){
     bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
   });

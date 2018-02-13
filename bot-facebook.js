@@ -45,9 +45,30 @@ function endConversation(message){
   var replyMessage = clone(message);
   var endMessage = clone(message);
   endMessage.text = 'time out';
-  middleware.interpret(bot, endMessage, function(){
-    bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
+  setTimeout(function(){
+    var attachment = {
+    "type":"account_unlink",
+    "payload":{
+      "template_type":"account_unlink",
+      "elements":[
+        {
+          "buttons":[
+            {
+              "type":"account_unlink",
+              "url":"https://kariteun-shopping.mybluemix.net/fblogout/fbid=<? $fbid ?>"
+            }
+          ]
+        }
+      ]
+    }
+  }
+    bot.reply(endMessage, {
+      attachment: attachment,
+    });
   });
+  /*middleware.interpret(bot, endMessage, function(){
+    bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
+  });*/
   console.log("Conversation ended");
 }
 
@@ -97,7 +118,7 @@ var processWatsonResponse = function(bot, message){
       });
     }
 
-    if (message.watsonData.output.action && message.watsonData.output.action.log_out) {
+    /*if (message.watsonData.output.action && message.watsonData.output.action.log_out) {
       console.log("Logout Template");
       //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
       setTimeout(function(){
@@ -116,7 +137,7 @@ var processWatsonResponse = function(bot, message){
         attachment: attachment,
       });
     });
-  }
+    }*/
   }
   endConvo = false;
 };

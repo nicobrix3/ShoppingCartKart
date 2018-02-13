@@ -98,13 +98,13 @@ var processWatsonResponse = function(bot, message){
     }
 
     if (message.watsonData.output.action && message.watsonData.output.action.log_out) {
-      console.log("Generic template.");
+      console.log("Logout Template");
       //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
       setTimeout(function(){
         var attachment = {
-        "type":"generic",
+        "type":"account_link",
         "payload":{
-          "template_type":"generic",
+          "template_type":"account_link",
           "elements":[
             {
               "buttons":message.watsonData.output.action.log_out.buttons

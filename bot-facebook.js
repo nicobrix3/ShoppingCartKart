@@ -96,6 +96,27 @@ var processWatsonResponse = function(bot, message){
         });
       });
     }
+
+    if (message.watsonData.output.action && message.watsonData.output.action.log_out) {
+      console.log("Generic template.");
+      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+      setTimeout(function(){
+        var attachment = {
+        "type":"generic",
+        "payload":{
+          "template_type":"generic",
+          "elements":[
+            {
+              "buttons":message.watsonData.output.action.log_out.buttons
+            }
+          ]
+        }
+      }
+      bot.reply(message, {
+        attachment: attachment,
+      });
+    });
+  }
   }
   endConvo = false;
 };

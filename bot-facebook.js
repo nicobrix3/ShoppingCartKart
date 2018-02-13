@@ -46,14 +46,16 @@ function endConversation(message){
   var replyMessage = clone(message);
   var endMessage = clone(message);
   endMessage.text = 'time out';
+
   //experiment start
   request('https://kariteun-shopping.mybluemix.net/fblogout/1772861762745413', function (err, response, body) {
-    console.log("Processing reqeust");
+    console.log("Processing request");
     console.log('error: ', err); // Handle the error if one occurred
     console.log('statusCode: ', response && response.statusCode); // Check 200 or such
     console.log('body ', body);
   });
   //experiment end
+
   middleware.interpret(bot, endMessage, function(){
     bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
   });

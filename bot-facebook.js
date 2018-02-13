@@ -45,7 +45,7 @@ function endConversation(message){
   var replyMessage = clone(message);
   var endMessage = clone(message);
   endMessage.text = 'time out';
-  setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+  setTimeout(function(){bot.reply(endMessage, message.watsonData.output.text.join('\n\n'))},0);
   setTimeout(function(){ // ari nag sugod ang experiment
     var attachment = {
       "type":"account_unlink",

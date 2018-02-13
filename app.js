@@ -33,6 +33,7 @@ var fb_id;
 var shoeBrand;
 var shoeType;
 var shoeColor;
+var replyMessage;
 
 var middleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
@@ -96,7 +97,7 @@ module.exports = function(app) {
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
-    var replyMessage = clone(message);
+    replyMessage = clone(message);
     var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
     //console.log("PATH: " + path);
     getFBusername(path, function(firstname, lastname, user_gender){

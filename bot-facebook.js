@@ -45,23 +45,29 @@ function endConversation(message){
   var replyMessage = clone(message);
   var endMessage = clone(message);
   endMessage.text = 'time out';
-  setTimeout(function(){bot.reply(endMessage, message.watsonData.output.text.join('\n\n'))},0);
-  setTimeout(function(){ // ari nag sugod ang experiment
+  // experiment start
+  setTimeout(function(){
     var attachment = {
-      "type":"account_unlink",
-      //"payload":{
-            "buttons":[
-              {
-                "type":"account_unlink",
-                "url":"https://kariteun-shopping.mybluemix.net/fblogout/fbid=<? $fbid ?>"
-              }
-            ]
-      //}
+    "type":"template",
+    "payload":{
+      "template_type":"account_unlink",
+      "elements":[
+        {
+          "buttons":[
+            {
+              "type": "account_unlink",
+              "url": "https://kariteun-shopping.mybluemix.net/fblogout/fbid=<? $fbid ?>"
+            }
+          ]
+        }
+      ]
     }
-    bot.reply(endMessage, {
-      attachment: attachment,
-    });
+  }
+  bot.reply(endMessage, {
+    attachment: attachment,
   });
+});
+  // experiment end
   /*middleware.interpret(bot, endMessage, function(){
     bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
   });*/

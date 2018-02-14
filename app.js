@@ -154,6 +154,11 @@ module.exports = function(app) {
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
     fb_id = message.user;
     console.log("FB id of user: " + fb_id);
+    
+    //experiment for username starts here
+    checkBalance(conversationResponse, callback);
+    //experiment ends here
+
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'check_balance'){
         return checkBalance(conversationResponse, callback);

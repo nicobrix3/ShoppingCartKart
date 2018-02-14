@@ -95,12 +95,6 @@ module.exports = function(app) {
     callback(null, conversationResponse);
   }
 
-  //EXPERIMENT START
-  function beforeBalance(conversationPayload, callback){
-    conversationPayload.context.user_name = userName;
-  }
-  //EXPERIMENT END
-
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
@@ -118,11 +112,6 @@ module.exports = function(app) {
       console.log("userLastName: " + userLastName);
       console.log("userGender: " + userGender);
     });
-
-    //experiment START
-    beforeBalance(conversationPayload, callback);
-    console.log("beforeBalance is called");
-    //experiement END
 
     storage.channels.get(message.channel, function(err,data){
       if(err){

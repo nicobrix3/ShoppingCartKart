@@ -23,7 +23,7 @@ require('dotenv').load();
 app.use('/images', express.static(path.join(__dirname, 'images')));
 var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
-//var maxElapsedUnits = 3000;
+//var maxElapsedUnits = 900; //15 minutes
 var maxElapsedUnits = 5; // test timeout
 console.log("Declared maxElapsedUnits: " + maxElapsedUnits + " seconds");
 var userName;
@@ -94,6 +94,13 @@ module.exports = function(app) {
     conversationResponse.context.gender = userGender;
     callback(null, conversationResponse);
   }
+
+  //EXPERIMENT START
+  function beforeBalance(conversationPayload, callback){
+    conversationPayload.context.user_name = userName;
+  }
+  //EXPERIMENT END
+
   // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
@@ -111,6 +118,12 @@ module.exports = function(app) {
       console.log("userLastName: " + userLastName);
       console.log("userGender: " + userGender);
     });
+
+    //experiment START
+    beforeBalance(conversationPayload, callback);
+    console.log("beforeBalance is called");
+    //experiement END
+
     storage.channels.get(message.channel, function(err,data){
       if(err){
         console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));

@@ -23,8 +23,8 @@ require('dotenv').load();
 app.use('/images', express.static(path.join(__dirname, 'images')));
 var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
-//var maxElapsedUnits = 900; //15 minutes
-var maxElapsedUnits = 5; // test timeout
+var maxElapsedUnits = 900; //15 minutes
+//var maxElapsedUnits = 5; // test timeout
 console.log("Declared maxElapsedUnits: " + maxElapsedUnits + " seconds");
 var userName;
 var userLastName;
@@ -101,7 +101,7 @@ module.exports = function(app) {
     replyMessage = clone(message);
     console.log("replyMessage: " + JSON.stringify(replyMessage));
     var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
-    //console.log("PATH: " + path);
+    console.log("PATH: " + path);
     getFBusername(path, function(firstname, lastname, user_gender){
       console.log("getFBusername");
       console.log("FB firstname "+ firstname +"\n");

@@ -23,8 +23,8 @@ require('dotenv').load();
 app.use('/images', express.static(path.join(__dirname, 'images')));
 var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
-var maxElapsedUnits = 3000;
-//var maxElapsedUnits = 5; // test timeout
+//var maxElapsedUnits = 3000;
+var maxElapsedUnits = 5; // test timeout
 console.log("Declared maxElapsedUnits: " + maxElapsedUnits + " seconds");
 var userName;
 var userLastName;
@@ -157,6 +157,7 @@ module.exports = function(app) {
     
     //experiment for username starts here
     checkBalance(conversationResponse, callback);
+    console.log("Check Balance is called");
     //experiment ends here
 
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){

@@ -111,10 +111,6 @@ module.exports = function(app) {
       console.log("userName: " + userName);
       console.log("userLastName: " + userLastName);
       console.log("userGender: " + userGender);
-      
-      //START EXPERIMENT
-      conversationPayload.context.user_name = userName;
-      //END EXPERIMENT
     });
 
     storage.channels.get(message.channel, function(err,data){

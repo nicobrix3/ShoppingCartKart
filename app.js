@@ -98,6 +98,7 @@ module.exports = function(app) {
   middleware.before = function(message, conversationPayload, callback) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
     replyMessage = clone(message);
+    console.log("replyMessage: " + JSON.stringify(replyMessage));
     var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
     //console.log("PATH: " + path);
     getFBusername(path, function(firstname, lastname, user_gender){
